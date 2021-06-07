@@ -3,11 +3,12 @@ from Bio.Seq import Seq
 from Bio import SeqIO
 import neatbio.sequtils as utils
 from collections import Counter
-
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use("Agg")
 import numpy as np
+import streamlit.components.v1 as components
+from stmol import component_3dmol
 
 
 def delta(x,y):
@@ -57,13 +58,16 @@ def main():
 
     if choice=="Introduction":
         st.subheader("Welcome to our Sequence Analysis Application :)")
+        components.html('''TEST''')
+        component_3dmol()
     elif choice=="DNA sequence Analysis":
         st.subheader("DNA sequence Analysis will be done here.")
         seq_file=st.file_uploader("Upload the .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
-        with open('test.fasta',"wb") as f: 
-            for line in seq_file.readlines():
-                f.write(line)         
+                 
         if seq_file is not None:
+            with open('test.fasta',"wb") as f: 
+                for line in seq_file.readlines():
+                    f.write(line)
             file = open('test.fasta','r')
             dna_file = SeqIO.parse(file,"fasta")
             #st.write(dna_record)
@@ -140,14 +144,16 @@ def main():
         st.subheader("Generate Dotplot for the comparision between two DNA sequences here.")
         seq_file1=st.file_uploader("Upload the first .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
         seq_file2=st.file_uploader("Upload the second .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
-        with open('test1.fasta',"wb") as f: 
-            for line in seq_file1.readlines():
-                f.write(line)
-        with open('test2.fasta',"wb") as f: 
-            for line in seq_file2.readlines():
-                f.write(line)    
+
 
         if seq_file1 and seq_file2 is not None:
+            with open('test1.fasta',"wb") as f: 
+                for line in seq_file1.readlines():
+                    f.write(line)
+            with open('test2.fasta',"wb") as f: 
+                for line in seq_file2.readlines():
+                    f.write(line)    
+
             file1 = open('test1.fasta','r')
             file2 = open('test2.fasta','r')
             dna_record1= SeqIO.read(file1,"fasta")
