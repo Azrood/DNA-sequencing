@@ -53,13 +53,12 @@ def main():
 
 
     st.title("DNA Genome analysis and Cosine Similarity Analysis web application")
-    menu= ["Introduction","DNA sequence Analysis","Dotplot Analysis","About us"]
+    menu= ["Introduction","DNA sequence Analysis","Dotplot Analysis","3D Visualization","About us"]
     choice= st.sidebar.selectbox("Select Option",menu)
 
     if choice=="Introduction":
         st.subheader("Welcome to our Sequence Analysis Application :)")
-        components.html('''TEST''')
-        component_3dmol()
+
     elif choice=="DNA sequence Analysis":
         st.subheader("DNA sequence Analysis will be done here.")
         seq_file=st.file_uploader("Upload the .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
@@ -144,7 +143,7 @@ def main():
         st.subheader("Generate Dotplot for the comparision between two DNA sequences here.")
         seq_file1=st.file_uploader("Upload the first .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
         seq_file2=st.file_uploader("Upload the second .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
-
+    
 
         if seq_file1 and seq_file2 is not None:
             with open('test1.fasta',"wb") as f: 
@@ -181,7 +180,8 @@ def main():
                 st.pyplot()
 
 
-
+    elif choice=="3D Visualization":
+        component_3dmol()
     elif choice=="About us":
         st.subheader("About the application and about us :)")
 
