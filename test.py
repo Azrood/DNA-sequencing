@@ -116,7 +116,7 @@ def main():
                 st.write(aa_freq)
 
             elif st.checkbox("Plot the Amino Acid frequency :"):
-                aa_color=st.beta_color_picker("Pick the Amino acid color:")
+                aa_color=st.color_picker("Pick the Amino acid color:")
                 #barlist= plt.bar(aa_freq.keys(),aa_freq.values(),color=aa_color)
                 #barlist[2].set_color(aa_color)
                 plt.bar(aa_freq.keys(),aa_freq.values(),color=aa_color)
@@ -136,24 +136,22 @@ def main():
 
 
 
-
-
-            #Top most amino acids
-
-
-
-
-
-
     elif choice=="Dotplot Analysis":
         st.subheader("Generate Dotplot for the comparision between two DNA sequences here.")
         seq_file1=st.file_uploader("Upload the first .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
         seq_file2=st.file_uploader("Upload the second .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
-
+        with open('test1.fasta',"wb") as f: 
+            for line in seq_file1.readlines():
+                f.write(line)
+        with open('test2.fasta',"wb") as f: 
+            for line in seq_file2.readlines():
+                f.write(line)    
 
         if seq_file1 and seq_file2 is not None:
-            dna_record1= SeqIO.read(seq_file1,"fasta")
-            dna_record2= SeqIO.read(seq_file2,"fasta")
+            file1 = open('test1.fasta','r')
+            file2 = open('test2.fasta','r')
+            dna_record1= SeqIO.read(file1,"fasta")
+            dna_record2= SeqIO.read(file2,"fasta")
             #st.write(dna_record)
             dna_seq1= dna_record1.seq
             dna_seq2= dna_record2.seq
