@@ -9,7 +9,11 @@ matplotlib.use("Agg")
 import numpy as np
 import streamlit.components.v1 as components
 from stmol import component_3dmol
+from Bio import pairwise2
+from Bio.pairwise2 import format_alignment
+import pandas as pd
 
+LOGGED = False
 
 def delta(x,y):
     return 0 if x == y else 1
@@ -39,12 +43,16 @@ def dotplot(seq1,seq2,k = 1,t = 1):
 
 
 def dotplotx(seq1,seq2):
-    plt.imshow(np.array(makeMatrix(seq1,seq2,1)))
+    fig,ax = plt.subplots()
+    
+    ax.imshow(np.array(makeMatrix(seq1,seq2,1)))
     # on x-axis list all sequences of seq 2
     xt=plt.xticks(np.arange(len(list(seq2))),list(seq2))
-    # on y-axis list all sequences of seq 1
+    # # on y-axis list all sequences of seq 1
     yt=plt.yticks(np.arange(len(list(seq1))),list(seq1))
+    plt.rcParams.update({'font.size': 5})
     plt.show()
+    return fig
 
 
 
@@ -70,33 +78,38 @@ def main():
             file = open('test.fasta','r')
             dna_file = SeqIO.parse(file,"fasta")
             #st.write(dna_record)
-            l = [record for record in dna_file] 
+            l = [record for record in dna_file]  
             dna_record = l[0]
             dna_seq= dna_record.seq
 
-            details= st.radio("Détails de l'ADN fournit par la base de donnée NCBI:",("Description des enregistrements ADN", "Séquence"))
+
+            cols=st.beta_columns(2)
+            details= cols[0].radio("Détails de l'ADN fournit par la base de donnée NCBI:",("Description des enregistrements ADN", "Séquence"))
             if details=="Description des enregistrements ADN":
-                st.write(dna_record.description)
+                cols[0].write(dna_record.description)
             elif details=="Séquence":
-                st.write(dna_record.seq)
+                cols[0].code(dna_record.seq)
+
 
             #Nucleotide
-            st.subheader("Fréquence de nucléotide :")
+            cols[1].subheader("Fréquence de nucléotide :")
             dna_freq=Counter(dna_seq)
-            st.write(dna_freq)
-            adenine_color=st.color_picker("Activer la couleur Adenine")
-            guanine_color=st.color_picker("Activer la couleur Guanine")
-            thymine_color=st.color_picker("Activer la couleur Thymine")
-            cytosine_color=st.color_picker("Activer la couleur Cytosine")
+            cols[1].write(dna_freq)
+            tpCols=st.beta_columns(4)
+            adenine_color=tpCols[0].color_picker("Activer la couleur Adenine")
+            guanine_color=tpCols[1].color_picker("Activer la couleur Guanine")
+            thymine_color=tpCols[2].color_picker("Activer la couleur Thymine")
+            cytosine_color=tpCols[3].color_picker("Activer la couleur Cytosine")
 
 
             if st.button("Graphe de fréquence"):
-                barlist=plt.bar(dna_freq.keys(),dna_freq.values())
+                fig,ax = plt.subplots()
+                barlist=ax.bar(dna_freq.keys(),dna_freq.values())
                 barlist[0].set_color(adenine_color)
                 barlist[1].set_color(guanine_color)
                 barlist[2].set_color(thymine_color)
                 barlist[3].set_color(cytosine_color)
-                st.pyplot()
+                st.pyplot(fig)
 
 
             st.subheader("Composition complète de l'ADN")
@@ -122,62 +135,82 @@ def main():
                 aa_color=st.color_picker("Choisir la couleur des acides aminées:")
                 #barlist= plt.bar(aa_freq.keys(),aa_freq.values(),color=aa_color)
                 #barlist[2].set_color(aa_color)
-                plt.bar(aa_freq.keys(),aa_freq.values(),color=aa_color)
-                st.pyplot()
+                f,a =plt.subplots()
+                a.bar(aa_freq.keys(),aa_freq.values(),color=aa_color)
+                st.pyplot(f)
 
             elif st.checkbox("Le nom complet de l'acide aminée est :"):
-                aa_name= str(p1).replace("*","")
-                aa3= utils.convert_1to3(aa_name)
-                st.write(aa_name)
-                st.write("========================")
-                st.write(aa3)
-
-
-
-                st.write("========================")
-                st.write(utils.get_acid_name(aa3))
+                amino_acids = [a for a in p1.split('*')]
+                amino = [utils.get_acid_name(utils.convert_1to3(a)) for a in amino_acids ]
+                df = pd.DataFrame({'amino_acids':amino_acids,'full':amino})
+                df['count'] = df['amino_acids'].apply(len)
+                st.write(df.nlargest(20,'count'))
+                # aa_name= str(p1).replace("*","")
+                # aa3= utils.convert_1to3(aa_name)
+                # st.write(aa_name)
+                # st.write("========================")
+                # st.write(aa3)
+                # st.write("========================")
+                # st.write(utils.get_acid_name(aa3))
 
 
 
     elif choice=="Comparaison de séquences ADN":
         st.subheader("Génère une comparaison entre 2 séquences ADN..")
-        seq_file1=st.file_uploader("Uploader le premier fichier .FASTA pour toute analyse ADN du génome considéré.", type=["fasta","fa"])
-        seq_file2=st.file_uploader("Uploader le second fichier .FASTA pour toute analyse ADN du génome considéré.", type=["fasta","fa"])
-    
+        try:
+            seq_file1=st.file_uploader("Uploader le premier fichier .FASTA pour toute analyse ADN du génome considéré.", type=["fasta","fa"])
 
-        if seq_file1 and seq_file2 is not None:
             with open('test1.fasta',"wb") as f: 
                 for line in seq_file1.readlines():
                     f.write(line)
+            seq_file2=st.file_uploader("Uploader le second fichier .FASTA pour toute analyse ADN du génome considéré.", type=["fasta","fa"])
+
             with open('test2.fasta',"wb") as f: 
                 for line in seq_file2.readlines():
-                    f.write(line)    
+                    f.write(line) 
+        except:
+            pass
+
+
+        if seq_file1 and seq_file2 is not None:
 
             file1 = open('test1.fasta','r')
             file2 = open('test2.fasta','r')
-            dna_record1= SeqIO.read(file1,"fasta")
-            dna_record2= SeqIO.read(file2,"fasta")
+            dna_record1= list(SeqIO.parse(file1,"fasta"))
+            dna_record2= list(SeqIO.parse(file2,"fasta"))
+            # seq1 = Seq('ATGTCGATGACGCT')
+            # seq2 = Seq('GTACTGCAGTC')
             #st.write(dna_record)
-            dna_seq1= dna_record1.seq
-            dna_seq2= dna_record2.seq
+            choice1 = st.selectbox("Selectionnez votre sequence",[rec for rec in dna_record1],format_func=lambda x: str(x.description))
+            choice2 = st.selectbox("Selectionnez votre sequence",[rec for rec in dna_record2],format_func=lambda x: str(x.description))
+            dna_seq1= choice1.seq
+            dna_seq2= choice2.seq
+            # print(dna_seq1)
+            # print(dna_seq2)
+            
+
 
             details= st.radio("Détails de l'ADN fournis par la base de donnée NCBI :",("Détails des enregistrement de la base de donnée NCBI", "Séquence de gènes"))
             if details=="Détails des enregistrement de la base de donnée NCBI":
-                st.write(dna_record1.description)
+                st.code(choice1.description)
                 st.write("===L'autre enregistrement peut être décrit comme :===")
-                st.write(dna_record2.description)
+                st.code(choice2.description)
 
             elif details=="Séquence de gènes":
-                st.write(dna_record1.seq)
+                st.write(choice1.seq)
                 st.write("===L'autre séquence peut être décrite comme: ===")
-                st.write(dna_record2.seq)
+                st.write(choice2.seq)
+            st.subheader('Alignement des séquences')
+            alignments = pairwise2.align.globalxx(dna_seq1[0:100],dna_seq2[0:100])
+            st.code (format_alignment(*alignments[0]))
 
+            st.subheader('Dotplot')
 
             display_limit=st.number_input("Selectionnez le nombre maximum de nucléotides",10,200,50)
             if st.button("Cliquez ici pour le graphe de comapraison :)"):
                 st.write("Comparaison des premières {} nucléotide des 2 séquences".format(display_limit))
-                dotplotx(dna_seq1[0:display_limit],dna_seq2[0:display_limit])
-                st.pyplot()
+                t=dotplotx(dna_seq1[0:display_limit],dna_seq2[0:display_limit])
+                st.pyplot(t)
 
 
     elif choice=="Visualisation 3D":
