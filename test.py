@@ -9,7 +9,11 @@ matplotlib.use("Agg")
 import numpy as np
 import streamlit.components.v1 as components
 from stmol import component_3dmol
+from Bio import pairwise2
+from Bio.pairwise2 import format_alignment
+import pandas as pd
 
+LOGGED = False
 
 def delta(x,y):
     return 0 if x == y else 1
@@ -39,30 +43,34 @@ def dotplot(seq1,seq2,k = 1,t = 1):
 
 
 def dotplotx(seq1,seq2):
-    plt.imshow(np.array(makeMatrix(seq1,seq2,1)))
+    fig,ax = plt.subplots()
+    
+    ax.imshow(np.array(makeMatrix(seq1,seq2,1)))
     # on x-axis list all sequences of seq 2
     xt=plt.xticks(np.arange(len(list(seq2))),list(seq2))
-    # on y-axis list all sequences of seq 1
+    # # on y-axis list all sequences of seq 1
     yt=plt.yticks(np.arange(len(list(seq1))),list(seq1))
+    plt.rcParams.update({'font.size': 5})
     plt.show()
+    return fig
 
 
 
 def main():
     """Bioinformatics Genome analysis web app"""
-
-
     st.title("DNA Genome analysis and Cosine Similarity Analysis web application")
     menu= ["Introduction","DNA sequence Analysis","Dotplot Analysis","3D Visualization","About us"]
+
     choice= st.sidebar.selectbox("Select Option",menu)
 
     if choice=="Introduction":
         st.subheader("Welcome to our Sequence Analysis Application :)")
 
     elif choice=="DNA sequence Analysis":
+        
         st.subheader("DNA sequence Analysis will be done here.")
         seq_file=st.file_uploader("Upload the .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
-                 
+                
         if seq_file is not None:
             with open('test.fasta',"wb") as f: 
                 for line in seq_file.readlines():
@@ -70,33 +78,36 @@ def main():
             file = open('test.fasta','r')
             dna_file = SeqIO.parse(file,"fasta")
             #st.write(dna_record)
-            l = [record for record in dna_file] 
+            l = [record for record in dna_file]  
             dna_record = l[0]
             dna_seq= dna_record.seq
-
-            details= st.radio("Details of the DNA as provided by NCBI database:",("DNA Record description", "Sequence"))
+            cols=st.beta_columns(2)
+            details= cols[0].radio("Details of the DNA as provided by NCBI database:",("DNA Record description", "Sequence"))
             if details=="DNA Record description":
-                st.write(dna_record.description)
+                cols[0].write(dna_record.description)
             elif details=="Sequence":
-                st.write(dna_record.seq)
+                cols[0].code(dna_record.seq)
+
 
             #Nucleotide
-            st.subheader("Nucleotide Frequency :")
+            cols[1].subheader("Nucleotide Frequency :")
             dna_freq=Counter(dna_seq)
-            st.write(dna_freq)
-            adenine_color=st.color_picker("Toggle the Adenine Colour ")
-            guanine_color=st.color_picker("Toggle the Guanine Colour ")
-            thymine_color=st.color_picker("Toggle the Thymine Colour ")
-            cytosine_color=st.color_picker("Toggle the Cytosine Colour ")
+            cols[1].write(dna_freq)
+            tpCols=st.beta_columns(4)
+            adenine_color=tpCols[0].color_picker("Toggle the Adenine Colour ")
+            guanine_color=tpCols[1].color_picker("Toggle the Guanine Colour ")
+            thymine_color=tpCols[2].color_picker("Toggle the Thymine Colour ")
+            cytosine_color=tpCols[3].color_picker("Toggle the Cytosine Colour ")
 
 
             if st.button("Plot frequency"):
-                barlist=plt.bar(dna_freq.keys(),dna_freq.values())
+                fig,ax = plt.subplots()
+                barlist=ax.bar(dna_freq.keys(),dna_freq.values())
                 barlist[0].set_color(adenine_color)
                 barlist[1].set_color(guanine_color)
                 barlist[2].set_color(thymine_color)
                 barlist[3].set_color(cytosine_color)
-                st.pyplot()
+                st.pyplot(fig)
 
 
             st.subheader("DNA complete Composition")
@@ -122,68 +133,102 @@ def main():
                 aa_color=st.color_picker("Pick the Amino acid color:")
                 #barlist= plt.bar(aa_freq.keys(),aa_freq.values(),color=aa_color)
                 #barlist[2].set_color(aa_color)
-                plt.bar(aa_freq.keys(),aa_freq.values(),color=aa_color)
-                st.pyplot()
+                f,a =plt.subplots()
+                a.bar(aa_freq.keys(),aa_freq.values(),color=aa_color)
+                st.pyplot(f)
 
             elif st.checkbox("The complete Amino acid name is given as"):
-                aa_name= str(p1).replace("*","")
-                aa3= utils.convert_1to3(aa_name)
-                st.write(aa_name)
-                st.write("========================")
-                st.write(aa3)
-
-
-
-                st.write("========================")
-                st.write(utils.get_acid_name(aa3))
+                amino_acids = [a for a in p1.split('*')]
+                amino = [utils.get_acid_name(utils.convert_1to3(a)) for a in amino_acids ]
+                df = pd.DataFrame({'amino_acids':amino_acids,'full':amino})
+                df['count'] = df['amino_acids'].apply(len)
+                st.write(df.nlargest(20,'count'))
+                # aa_name= str(p1).replace("*","")
+                # aa3= utils.convert_1to3(aa_name)
+                # st.write(aa_name)
+                # st.write("========================")
+                # st.write(aa3)
+                # st.write("========================")
+                # st.write(utils.get_acid_name(aa3))
 
 
 
     elif choice=="Dotplot Analysis":
         st.subheader("Generate Dotplot for the comparision between two DNA sequences here.")
-        seq_file1=st.file_uploader("Upload the first .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
-        seq_file2=st.file_uploader("Upload the second .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
-    
-
-        if seq_file1 and seq_file2 is not None:
+        try:
+            seq_file1=st.file_uploader("Upload the first .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
             with open('test1.fasta',"wb") as f: 
                 for line in seq_file1.readlines():
                     f.write(line)
+            seq_file2=st.file_uploader("Upload the second .FASTA file for any DNA analysis of the considered Genome.", type=["fasta","fa"])
+
             with open('test2.fasta',"wb") as f: 
                 for line in seq_file2.readlines():
-                    f.write(line)    
+                    f.write(line) 
+        except:
+            pass
+
+
+        if seq_file1 and seq_file2 is not None:
 
             file1 = open('test1.fasta','r')
             file2 = open('test2.fasta','r')
-            dna_record1= SeqIO.read(file1,"fasta")
-            dna_record2= SeqIO.read(file2,"fasta")
+            dna_record1= list(SeqIO.parse(file1,"fasta"))
+            dna_record2= list(SeqIO.parse(file2,"fasta"))
+            # seq1 = Seq('ATGTCGATGACGCT')
+            # seq2 = Seq('GTACTGCAGTC')
             #st.write(dna_record)
-            dna_seq1= dna_record1.seq
-            dna_seq2= dna_record2.seq
+            choice1 = st.selectbox("Selectionnez votre sequence",[rec for rec in dna_record1],format_func=lambda x: str(x.description))
+            choice2 = st.selectbox("Selectionnez votre sequence",[rec for rec in dna_record2],format_func=lambda x: str(x.description))
+            dna_seq1= choice1.seq
+            dna_seq2= choice2.seq
+            # print(dna_seq1)
+            # print(dna_seq2)
+            
+
 
             details= st.radio("Details of the DNA as provided by NCBI database:",("Record details from the NCBI database", "Gene Sequence"))
             if details=="Record details from the NCBI database":
-                st.write(dna_record1.description)
+                st.code(choice1.description)
                 st.write("===And the other Record is decribed as :===")
-                st.write(dna_record2.description)
+                st.code(choice1.description)
 
             elif details=="Gene Sequence":
-                st.write(dna_record1.seq)
+                st.write(choice1.seq)
                 st.write("===And the other sequence can be given as: ===")
-                st.write(dna_record2.seq)
+                st.write(choice1.seq)
+            st.subheader('Alignement des sequences')
+            alignments = pairwise2.align.globalxx(dna_seq1[0:100],dna_seq2[0:100])
+            st.code (format_alignment(*alignments[0]))
 
+            st.subheader('Dotplot')
 
-            display_limit=st.number_input("Select maximum number of Nucleotides",10,200,50)
+            display_limit=st.number_input("Select maximum number of Nucleotides",10,1000,50)
             if st.button("Push here for Dotplot :)"):
                 st.write("Comparing the first {} nucleotide of the two sequences".format(display_limit))
-                dotplotx(dna_seq1[0:display_limit],dna_seq2[0:display_limit])
-                st.pyplot()
+                t=dotplotx(dna_seq1[0:display_limit],dna_seq2[0:display_limit])
+                st.pyplot(t)
+                # try:
+                #     st.pyplot()
+                # except:
+                #     pass
 
+    # if LOGGED :
+    #     block1=st.empty()
+    #     block2=st.empty()
+    #     block3=st.empty()
+        
+    #     username = block1.text_input('Username')
+    #     password = block2.text_input('Password')
+    #     if block3.button('Login'):
+    #         if True:
+    #             block1.empty()
+    #             block2.empty()
+    #             block3.empty()
 
-    elif choice=="3D Visualization":
-        component_3dmol()
-    elif choice=="About us":
-        st.subheader("About the application and about us :)")
+    #             deploy()
+    # else:
+    #     deploy()
 
 if __name__=='__main__':
     main()
