@@ -66,7 +66,16 @@
     {{ form.as_p }}
     <button type="submit">Upload</button>
     </form>
+    <div>
     {{ dna_desc }}
+    </div>
+    <br/>
+    <div>
+    {{ nuc_freq }}
+    </div>
+    <div style="width:500;height:100">
+      {{ graph_div|safe }}
+    </div>
     {% endblock %}
     
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-634f"><div class="u-clearfix u-sheet u-sheet-1">
