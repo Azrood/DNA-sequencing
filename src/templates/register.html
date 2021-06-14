@@ -58,28 +58,29 @@
     <section class="u-clearfix u-section-1" id="carousel_fd9f">
       <div class="u-clearfix u-sheet u-valign-middle-sm u-sheet-1">
         <div class="u-palette-1-light-2 u-shape u-shape-rectangle u-shape-1"></div>
-        <img src="images/aa49e5bbcb321c65e1d4ba4d4afa599b.png" alt="" class="u-image u-image-default u-opacity u-opacity-55 u-image-1" data-image-width="817" data-image-height="799">
-        <img src="images/1f584569eb6a719cc7723d00caf18985932bbc6c66fe56a176af01cbf22d4749fbb11a830fe7aee3314dfd40c04ccf071ff0fd65c591486122c8b9_1280.jpg" alt="" class="u-image u-image-default u-image-2" data-image-width="1280" data-image-height="640">
+        <img src="{% static 'images/aa49e5bbcb321c65e1d4ba4d4afa599b.png' %}" alt="" class="u-image u-image-default u-opacity u-opacity-55 u-image-1" data-image-width="817" data-image-height="799">
+        <img src="{% static 'images/1f584569eb6a719cc7723d00caf18985932bbc6c66fe56a176af01cbf22d4749fbb11a830fe7aee3314dfd40c04ccf071ff0fd65c591486122c8b9_1280.jpg' %}" alt="" class="u-image u-image-default u-image-2" data-image-width="1280" data-image-height="640">
         <div class="u-align-center u-container-style u-group u-white u-group-1">
           <div class="u-container-layout u-valign-top u-container-layout-1">
             <h1 class="u-custom-font u-font-montserrat u-text u-text-1">S'inscrire</h1>
             <div class="u-align-left u-expanded-width-xs u-form u-form-1">
               <form action="#" method="POST" class="u-clearfix u-form-spacing-28 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form">
+                {% csrf_token %}
                 <div class="u-form-group u-form-name u-form-group-1">
                   <label for="name-5a14" class="u-form-control-hidden u-label" wfd-invisible="true">Name</label>
-                  <input type="text" placeholder="Nom d'utilisateur" id="name-5a14" name="name" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                  <input type="text" placeholder="Nom d'utilisateur" id="name-5a14" name="username" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
                 </div>
                 <div class="u-form-group u-form-group-2">
                   <label for="text-bfe4" class="u-form-control-hidden u-label"></label>
                   <input type="text" placeholder="Email" id="text-bfe4" name="text" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white">
                 </div>
-                <div class="u-form-email u-form-group u-form-group-3">
-                  <label for="email-5a14" class="u-form-control-hidden u-label" wfd-invisible="true">Email</label>
-                  <input type="email" placeholder="Mot de passe" id="email-5a14" name="email" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                <div class="u-form-password u-form-group u-form-group-3">
+                  <label for="password-5a14" class="u-form-control-hidden u-label" wfd-invisible="true"></label>
+                  <input type="password" placeholder="Mot de passe" id="password-5a14" name="password" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
                 </div>
                 <div class="u-form-group u-form-group-4">
                   <label for="text-0cbb" class="u-form-control-hidden u-label"></label>
-                  <input type="text" placeholder="Confirmez votre mot de passe" id="text-0cbb" name="text-1" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white">
+                  <input type="password" placeholder="Confirmez votre mot de passe" id="password-0cbb" name="password2" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white">
                 </div>
                 <div class="u-align-center u-form-group u-form-submit u-form-group-5">
                   <a href="#" class="u-border-2 u-border-black u-btn u-btn-submit u-button-style u-hover-black u-none u-text-black u-text-hover-white u-btn-1">S'inscrire<br>
@@ -91,7 +92,7 @@
                 <input type="hidden" value="" name="recaptchaResponse" wfd-invisible="true">
               </form>
             </div>
-            <h6 class="u-text u-text-2">Vous avez&nbsp;déjà&nbsp;un compte ? <span style="text-decoration: underline !important;">Se connecter</span>
+            <h6 class="u-text u-text-2">Vous avez&nbsp;déjà&nbsp;un compte ? <a href="{% url 'login' %}"><span style="text-decoration: underline !important;">Se connecter</span></a>
             </h6>
           </div>
         </div>
