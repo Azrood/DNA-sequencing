@@ -13,6 +13,10 @@ from pages.models import FilesUpload, Utilisateur
 
 
 # Create your views here.
+
+def base(request):
+    return render(request, "base.html")
+
 @login_required(login_url="login")
 def home_view(request):
     return render(request,"index.html")

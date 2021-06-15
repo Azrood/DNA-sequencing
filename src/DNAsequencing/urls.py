@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pages.views import home_view,analyse_view,vis3d_view, login_view, register, disconnect
+from pages.views import home_view,analyse_view,vis3d_view, login_view, register, disconnect, base
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -26,7 +26,9 @@ urlpatterns = [
     path('vis3d/',vis3d_view,name='vis3d'),
     path('login/', login_view, name="login"),
     path('inscription/', register, name="register"),
-    path('disconnect/', disconnect, name="disconnect")
+    path('disconnect/', disconnect, name="disconnect"),
+    path("base/", base, name="base")
+
 ]
 
 if settings.DEBUG:
