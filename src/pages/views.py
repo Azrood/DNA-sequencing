@@ -14,7 +14,12 @@ from pages.models import FilesUpload, Utilisateur
 
 # Create your views here.
 
-def base(request):
+@login_required(login_url="login")
+def profile(request):
+    return render(request, "profile.html")
+
+@login_required(login_url="login")
+def compare(request):
     return render(request, "base.html")
 
 @login_required(login_url="login")

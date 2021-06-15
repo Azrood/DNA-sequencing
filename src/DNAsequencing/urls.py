@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pages.views import home_view,analyse_view,vis3d_view, login_view, register, disconnect, base
+from pages.views import home_view,analyse_view,vis3d_view, login_view, register, disconnect, compare, profile
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -27,7 +27,8 @@ urlpatterns = [
     path('login/', login_view, name="login"),
     path('inscription/', register, name="register"),
     path('disconnect/', disconnect, name="disconnect"),
-    path("base/", base, name="base")
+    path("compare/", compare, name="compare"),
+    path("profile/", profile, name="profile")
 
 ]
 
