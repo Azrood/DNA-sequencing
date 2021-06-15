@@ -8,11 +8,10 @@
   <meta name="keywords" content="Analyse&nbsp;de&nbsp;séquence&nbsp;ADN">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>analyse</title>
-  {% block css_link %}
-  {% endblock %}
+  <title>{% block title %} {% endblock %}</title>
+
   <link rel="stylesheet" href="{% static 'nicepage.css' %}" media="screen">
-  <link rel="stylesheet" href="{% static 'base.css' %}" media="screen">
+  {% block css_link %}<link rel="stylesheet" href="{% static 'base.css' %}" media="screen">{% endblock %}
   <script class="u-script" type="text/javascript" src="{% static 'jquery.js' %}" defer=""></script>
   <script class="u-script" type="text/javascript" src="{% static 'nicepage.js' %}" defer=""></script>
   <meta name="generator" content="Nicepage 3.17.2, nicepage.com">
@@ -55,15 +54,19 @@
           <ul class="u-nav u-unstyled u-nav-1">
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Accueil.html" style="padding: 10px 20px;">Accueil</a>
+                href="{% url 'home' %}" style="padding: 10px 20px;">Accueil</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                style="padding: 10px 20px;">Profile</a>
+                href="{% url 'profile' %}" style="padding: 10px 20px;">Profile</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Contact.html" style="padding: 10px 20px;">Se Déconnecter</a>
+                {% if user.is_authenticated %}
+                  href="{% url 'disconnect' %}" style="padding: 10px 20px;">Se Déconnecter</a>
+                  {% else %}
+                  href="{% url 'login' %}" style="padding: 10px 20px;">Se Connecter</a>
+                  {% endif %}
             </li>
           </ul>
         </div>
@@ -72,12 +75,12 @@
             <div class="u-sidenav-overflow">
               <div class="u-menu-close"></div>
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Accueil.html"
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'home' %}"
                     style="padding: 10px 20px;">Accueil</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" style="padding: 10px 20px;">Profile</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'profile' %}" style="padding: 10px 20px;">Profile</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Contact.html"
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'disconnect' %}"
                     style="padding: 10px 20px;">Se Déconnecter</a>
                 </li>
               </ul>
@@ -93,7 +96,7 @@
       <div class="u-expanded-width u-list u-list-1">
         <div class="u-repeater u-repeater-1">
           <div class="u-container-style u-effect-hover-liftUp u-list-item u-repeater-item u-shading u-list-item-1"
-            data-image-width="1280" data-image-height="720" data-href="analyse.html" data-page-id="91390010">
+            data-image-width="1280" data-image-height="720" data-href="{% url 'analyse' %}" data-page-id="91390010">
             <div class="u-background-effect u-expanded">
               <div class="u-background-effect-image u-expanded u-image u-shading u-image-1" data-image-width="1280"
                 data-image-height="720"></div>
