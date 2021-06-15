@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+  
+  {% block css_link %}<link rel="stylesheet" href="{% static 'profile.css' %}" media="screen">{% endblock %}
+ 
+
+{% block main_body %}
+<section class="u-align-center u-clearfix u-section-2" id="sec-c2d8">
+  <div class="u-clearfix u-sheet u-sheet-1">
+      <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-1">
+        <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
+          <li class="u-tab-item u-tab-item-1" role="presentation">
+            <a class="active u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-1"
+              id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7" aria-selected="true">Fichiers</a>
+          </li>
+          <li class="u-tab-item u-tab-item-2" role="presentation">
+            <a class="u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-2"
+              id="tab-6e5a" href="#link-tab-6e5a" role="tab" aria-controls="link-tab-6e5a"
+              aria-selected="false">Paramètres</a>
+          </li>
+        </ul>
+        <div class="u-tab-content">
+          <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-active u-tab-pane u-tab-pane-1"
+            id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
+            <div class="u-container-layout u-container-layout-1">
+              <h2 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">Liste de
+                fichiers</h2>
+              <div class="u-table u-table-responsive u-table-1">
+                <table class="u-table-entity">
+                  <colgroup>
+                    <col width="5.1%">
+                    <col width="61.6%">
+                    <col width="33.3%">
+                  </colgroup>
+                  <thead class="u-palette-1-light-1 u-table-header u-table-header-1">
+                    <tr style="height: 45px;">
+                      <th class="u-border-1 u-border-palette-1-light-1 u-table-cell"></th>
+                      <th class="u-border-1 u-border-palette-4-base u-table-cell">Nom du fichier</th>
+                      <th class="u-border-1 u-border-palette-4-base u-table-cell">Type du fichier</th>
+                    </tr>
+                  </thead>
+                  <tbody class="u-table-body">
+                    <tr style="height: 54px;">
+                      <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4"></td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                    </tr>
+                    <tr style="height: 55px;">
+                      <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7"></td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                    </tr>
+                    <tr style="height: 55px;">
+                      <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-10"></td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                    </tr>
+                    <tr style="height: 55px;">
+                      <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13"></td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="u-container-style u-group u-group-1">
+                <div class="u-container-layout">
+                  <a href="https://nicepage.com/c/product-list-website-templates"
+                    class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1">charger</a>
+                  <a href="https://nicepage.com/c/product-list-website-templates"
+                    class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-2">modifier</a>
+                  <a href="https://nicepage.com/c/product-list-website-templates"
+                    class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3">supprimer</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-pane u-tab-pane-2" id="link-tab-6e5a"
+            role="tabpanel" aria-labelledby="tab-6e5a">
+            <div class="u-container-layout u-container-layout-3">
+              <div class="u-form u-form-1">
+                <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
+                  style="padding: 10px" source="custom" name="form">
+                  <input type="hidden" id="siteId" name="siteId" value="411213413">
+                  <input type="hidden" id="pageId" name="pageId" value="91390010">
+                  <div class="u-form-group u-form-name">
+                    <label for="name-efdd" class="u-form-control-hidden u-label">Name</label>
+                    <input type="text" placeholder="Nom d'utilsateur" id="name-efdd" name="name"
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                  </div>
+                  <div class="u-form-email u-form-group">
+                    <label for="email-efdd" class="u-form-control-hidden u-label">Email</label>
+                    <input type="email" placeholder="Email" id="email-efdd" name="email"
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                  </div>
+                  <div class="u-form-group u-form-group-3">
+                    <label for="text-9bdd" class="u-form-control-hidden u-label"></label>
+                    <input type="text" placeholder="Nouveau mot de passe" id="text-9bdd" name="text"
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                  </div>
+                  <div class="u-form-group u-form-group-4">
+                    <label for="text-e18b" class="u-form-control-hidden u-label"></label>
+                    <input type="text" placeholder="Confirmez votre mot de passe" id="text-e18b" name="text-1"
+                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                  </div>
+                  <div class="u-align-center u-form-group u-form-submit">
+                    <a href="#" class="u-btn u-btn-submit u-button-style u-btn-4">Modifier</a>
+                    <input type="submit" value="submit" class="u-form-control-hidden">
+                  </div>
+                  <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+                  <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors
+                    then try again. </div>
+                  <input type="hidden" value="" name="recaptchaResponse">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="u-align-center u-clearfix u-section-3" id="sec-161c">
+    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1"></div>
+  </section>
+  <section class="u-clearfix u-section-4" id="sec-8282">
+    <div class="u-clearfix u-sheet u-sheet-1"></div>
+  </section>
+{% endblock %}
