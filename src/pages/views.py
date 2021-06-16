@@ -37,7 +37,7 @@ def analyse_view(request,*args,**kwargs):
         form = FilesUploadForm()
     # amino_acids = [a for a in analysis().seq.translate().split('*')]
     # df = pd.DataFrame({'amino_acids':amino_acids})
-    content = {'form':form,'dna':analysis(),'nuc_freq':dict(Counter(analysis().seq)),'graph_div':plotly.offline.plot(analysis_plot(), auto_open = False, output_type="div"),'compo_adn':{'GC':GC(analysis().seq),'AT':100-GC(analysis().seq)},'transcribe':analysis().seq.transcribe(),'translate':analysis().seq.translate(),'complement':analysis().seq.complement(),'aa_freq':dict(Counter(analysis().seq.translate()))}
+    content = {'form':form,'dna':analysis(),'nuc_freq':dict(Counter(analysis().seq)),'nuc_graph':plotly.offline.plot(analysis_plot(analysis().seq), auto_open = False, output_type="div"),'compo_adn':{'GC':GC(analysis().seq),'AT':100-GC(analysis().seq)},'transcribe':analysis().seq.transcribe(),'translate':analysis().seq.translate(),'complement':analysis().seq.complement(),'aa_freq':dict(Counter(analysis().seq.translate())),'aa_graph':plotly.offline.plot(analysis_plot(analysis().seq.translate()), auto_open = False, output_type="div")}
     return render(request,"analyse.html",content)
 
 @login_required(login_url="login")

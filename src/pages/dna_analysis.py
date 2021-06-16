@@ -15,10 +15,10 @@ def analysis():
     dna_record = l[0]
     return dna_record
 
-def analysis_plot():
-    dna_freq = Counter(analysis().seq)
+def analysis_plot(seq):
+    dna_freq = Counter(seq)
     fig = go.Figure(
     data=[go.Bar(x=list(dna_freq.keys()),y=list(dna_freq.values()))],
-    layout_title_text="Graphe de fréquence des nucléotides "
+    layout_title_text="Graphe de fréquence"
     )
     return fig
