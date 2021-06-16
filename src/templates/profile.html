@@ -112,7 +112,7 @@
             </div>
           </div>
           <div class="u-container-style u-effect-hover-liftUp u-list-item u-repeater-item u-shading u-list-item-2"
-            data-image-width="1500" data-image-height="1000" data-href="{% url 'compare' %}" >
+            data-image-width="1500" data-image-height="1000" data-href="{% url 'compare' %}">
             <div class="u-background-effect u-expanded">
               <div class="u-background-effect-image u-expanded u-image u-shading u-image-2" data-image-width="1500"
                 data-image-height="1000"></div>
@@ -210,40 +210,73 @@
             role="tabpanel" aria-labelledby="tab-6e5a">
             <div class="u-container-layout u-container-layout-3">
               <div class="u-form u-form-1">
-                <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
+                <b><h3>Changer votre mot de passe</h3></b>
+                <b> {{ passform.errors.as_text }} </b>
+                {% if messages %}
+							
+									{% for message in messages%}
+								
+                  <b class="u-form-send-success"> 	{{ message.as_text }}</b>
+									{% endfor %}
+								
+								{% endif %}
+                <form action="#" name="pass_change" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
                   style="padding: 10px" source="custom" name="form">
-                  <input type="hidden" id="siteId" name="siteId" value="411213413">
-                  <input type="hidden" id="pageId" name="pageId" value="91390010">
+                  {% csrf_token %}
                   <div class="u-form-group u-form-name">
-                    <label for="name-efdd" class="u-form-control-hidden u-label">Name</label>
-                    <input type="text" placeholder="Nom d'utilsateur" id="name-efdd" name="name"
-                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                    <label for="name-efdd" class="u-form-control-hidden u-label"></label>
+                    {{ passform.old_password }}
                   </div>
                   <div class="u-form-email u-form-group">
-                    <label for="email-efdd" class="u-form-control-hidden u-label">Email</label>
-                    <input type="email" placeholder="Email" id="email-efdd" name="email"
-                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                    <label for="email-efdd" class="u-form-control-hidden u-label"></label>
+                    {{ passform.new_password1}}
                   </div>
+
                   <div class="u-form-group u-form-group-3">
                     <label for="text-9bdd" class="u-form-control-hidden u-label"></label>
-                    <input type="text" placeholder="Nouveau mot de passe" id="text-9bdd" name="text"
-                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
-                  </div>
-                  <div class="u-form-group u-form-group-4">
-                    <label for="text-e18b" class="u-form-control-hidden u-label"></label>
-                    <input type="text" placeholder="Confirmez votre mot de passe" id="text-e18b" name="text-1"
-                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                    {{ passform.new_password2}}
                   </div>
                   <div class="u-align-center u-form-group u-form-submit">
-                    <a href="#" class="u-btn u-btn-submit u-button-style u-btn-4">Modifier</a>
-                    <input type="submit" value="submit" class="u-form-control-hidden">
+                   <input type="submit" value="Modifier le mot de passe" name="pass_change" class="u-btn u-btn-submit u-button-style u-btn-4">
+                   <input type="hidden" value="Modifier le mot de passe" name="pass_change" class="u-btn u-btn-submit u-button-style u-btn-4">
                   </div>
-                  <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-                  <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors
-                    then try again. </div>
-                  <input type="hidden" value="" name="recaptchaResponse">
+                  
                 </form>
+
               </div>
+              <div class="u-form u-form-1">
+                <b><h3>Changer votre adresse mail</h3></b>
+                <b class="u-form-send-error"> {{mailform.non_field_errors.as_text}} </b>
+                {% if messages %}
+                
+									{% for message in messages%}
+								
+                  <b class="u-form-send-success"> 	{{message.as_text}}</b>
+									{%endfor%}
+								
+								{%endif%}
+                <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
+                  style="padding: 10px" source="custom" name="form">
+                  {% csrf_token %}
+                  <div class="u-form-group u-form-name">
+                    <label for="name-efdd" class="u-form-control-hidden u-label"></label>
+                    {{ mailform.old_mail }}
+                  </div>
+                  <div class="u-form-email u-form-group">
+                    <label for="email-efdd" class="u-form-control-hidden u-label"></label>
+                    {{ mailform.new_email}}
+                  </div>
+
+                  <div class="u-form-group u-form-group-3">
+                    <label for="text-9bdd" class="u-form-control-hidden u-label"></label>
+                    {{ mailform.current_password}}
+                  </div>
+                  <div class="u-align-center u-form-group u-form-submit">
+                    <a href="#" class="u-btn u-btn-submit u-button-style u-btn-4">Modifier l'email'</a>
+                    <input type="submit" value="submit" name="mail_change" class="u-form-control-hidden">
+                  </div>
+                  
+                </form>
             </div>
           </div>
         </div>

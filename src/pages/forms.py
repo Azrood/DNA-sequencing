@@ -3,7 +3,8 @@ from django.core.exceptions import ValidationError
 from pages.models import FilesUpload, Utilisateur, User
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
-CSS_CLASS_FIELD = "u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white"
+CSS_CLASS_LOGIN_FIELD = "u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white"
+CSS_FORM_PASS_MAIL_CHANGE = "u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
 
 class FilesUploadForm(forms.ModelForm):
     class Meta:
@@ -11,14 +12,14 @@ class FilesUploadForm(forms.ModelForm):
         fields = ['file']
 
 class SignupForm(forms.Form):
-    username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Nom d\'utilisateur', 'class':CSS_CLASS_FIELD}))
+    username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Nom d\'utilisateur', 'class':CSS_CLASS_LOGIN_FIELD}))
     password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(
             attrs={'placeholder':'Mot de passe',
             'pattern':r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", 
             'title':"Doit contenir au moins un nombre, une lettre majuscule et une lettre minuscule, et au moins 8 caractères",
-            'class':CSS_CLASS_FIELD}))
-    password2 = forms.CharField(label='Confirmer le mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Confirmez votre mot de passe', 'class':CSS_CLASS_FIELD}))
-    email = forms.EmailField(label='Adresse Email',widget=forms.EmailInput(attrs={'placeholder':'Email', 'class':CSS_CLASS_FIELD}))
+            'class':CSS_CLASS_LOGIN_FIELD}))
+    password2 = forms.CharField(label='Confirmer le mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Confirmez votre mot de passe', 'class':CSS_CLASS_LOGIN_FIELD}))
+    email = forms.EmailField(label='Adresse Email',widget=forms.EmailInput(attrs={'placeholder':'Email', 'class':CSS_CLASS_LOGIN_FIELD}))
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
@@ -52,8 +53,8 @@ class SignupForm(forms.Form):
         return user
 
 class SigninForm(AuthenticationForm):
-    username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Entrez le nom d\'utilisateur', 'class':CSS_CLASS_FIELD}))
-    password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Entrez votre mot de passe', 'class':CSS_CLASS_FIELD}))
+    username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Entrez le nom d\'utilisateur', 'class':CSS_CLASS_LOGIN_FIELD}))
+    password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Entrez votre mot de passe', 'class':CSS_CLASS_LOGIN_FIELD}))
 
     error_messages = {
         'invalid_login': ("Nom d'utilisateur ou mot de passe incorrect"),
@@ -62,19 +63,19 @@ class SigninForm(AuthenticationForm):
 class ChangePass(PasswordChangeForm):
     new_password1 = forms.CharField(
         label="Nouveau mot de passe",
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Entrez votre nouveau mot de passe'}),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Entrez votre nouveau mot de passe', 'class':CSS_FORM_PASS_MAIL_CHANGE}),
         strip=False,
         help_text="Au minimum 8 caractères.\nDoit contenir au moins un caractère numérique, une majuscule et un symbole",
     )
     new_password2 = forms.CharField(
         label="Confirmation du nouveau mot de passe",
         strip=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Confirmer votre nouveau mot de passe'}),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Confirmer votre nouveau mot de passe', 'class':CSS_FORM_PASS_MAIL_CHANGE}),
     )
     old_password = forms.CharField(
         label="Mot de passe actuel",
         strip=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autofocus': True,'placeholder':'Entrer votre mot de passe actuel'})
+        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autofocus': True,'placeholder':'Entrer votre mot de passe actuel', 'class':CSS_FORM_PASS_MAIL_CHANGE})
     )
 
     error_messages = {
@@ -88,9 +89,9 @@ class ChangeMail(forms.Form):
         'password_incorrect': 'Mot de passe incorrect'
 }
 
-    old_mail = forms.EmailField(label='Adresse Email actuelle',widget=forms.EmailInput(attrs={'placeholder':'Entrer votre adresse actuelle'}))
-    new_email = forms.EmailField(label='Nouvelle adresse Email',widget=forms.EmailInput(attrs={'placeholder':'Entrez votre nouvelle adresse email'}))
-    current_password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'placeholder':'entrez votre mot de passe pour confirmer'}),required=True)
+    old_mail = forms.EmailField(label='Adresse Email actuelle',widget=forms.EmailInput(attrs={'placeholder':'Entrer votre adresse actuelle', 'class':CSS_FORM_PASS_MAIL_CHANGE, "disabled":True}))
+    new_email = forms.EmailField(label='Nouvelle adresse Email',widget=forms.EmailInput(attrs={'placeholder':'Entrez votre nouvelle adresse email', 'class':CSS_FORM_PASS_MAIL_CHANGE}))
+    current_password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'placeholder':'entrez votre mot de passe pour confirmer', 'class':CSS_FORM_PASS_MAIL_CHANGE}),required=True)
 
     def __init__(self, user, *args, **kwargs):
         self.user = user

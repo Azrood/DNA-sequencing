@@ -17,10 +17,6 @@ from pages.models import FilesUpload, Utilisateur
 # Create your views here.
 
 @login_required(login_url="login")
-def profile(request):
-    return render(request, "profile.html")
-
-@login_required(login_url="login")
 def compare(request):
     return render(request, "base.html")
 
@@ -81,10 +77,11 @@ def login_view(request):
         form = SigninForm()
     return render(request, "login.html", {'form': form})
 
-@login_required
-def parametre(request):
+
+@login_required(login_url="login")
+def profile(request):
     pass_form = ChangePass(user=request.user)
-    mail_form = ChangeMail(user=request.user,initial={'old_mail':request.user.email})
+    mail_form = ChangeMail(user=request.user, initial={'old_mail':request.user.email})
     if request.method == 'POST':
         if "pass_change" in request.POST:
             pass_form = ChangePass(user=request.user, data=request.POST)
@@ -92,9 +89,11 @@ def parametre(request):
                 pass_form.save()
                 update_session_auth_hash(request, pass_form.user)
                 messages.success(request, 'Votre mot de passe a été changé avec succès')
+                redirect("/home/")
         elif "mail_change" in request.POST:
             mail_form = ChangeMail(user=request.user, data=request.POST)
             if mail_form.is_valid():
                 mail_form.save()
                 messages.success(request, 'Votre adresse mail a été modifiée avec succès')
-    return render(request, 'quiz/parametres.html', {'passform':pass_form, 'mailform':mail_form})
+                redirect("/home/")
+    return render(request, 'profile.html', {'passform':pass_form, 'mailform':mail_form})

@@ -63,7 +63,7 @@
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
                 {% if user.is_authenticated %}
-                  href="{% url 'disconnect' %}" style="padding: 10px 20px;">Se Déconnecter</a>
+                  href="{% url 'disconnect' %}" style="padding: 10px 20px;">Déconnexion</a>
                   {% else %}
                   href="{% url 'login' %}" style="padding: 10px 20px;">Se Connecter</a>
                   {% endif %}
@@ -78,7 +78,7 @@
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'home' %}"
                     style="padding: 10px 20px;">Accueil</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'profile' %}" style="padding: 10px 20px;">Profile</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'profile' %}" style="padding: 10px 20px;">Profil</a>
                 </li>
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'disconnect' %}"
                     style="padding: 10px 20px;">Se Déconnecter</a>
