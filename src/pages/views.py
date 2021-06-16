@@ -94,8 +94,13 @@ def profile(request):
             file_form = FilesUploadForm(data=request.POST, files=request.FILES)
             if file_form.is_valid():
                 file_form.save(user=request.user)
-        if "change" in request.POST:
-            pass
+        elif "del" in request.POST:
+            print(request.POST )
+            ids =[x for x in request.POST.keys() if x not in ("csrfmiddlewaretoken", "del")]
+            files = FilesUpload.objects.filter(id__in=ids)
+            for f in files:
+                f.delete()
+
         elif "pass_change" in request.POST:
             pass_form = ChangePass(user=request.user, data=request.POST)
             if pass_form.is_valid():
