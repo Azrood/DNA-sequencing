@@ -86,10 +86,11 @@ def profile(request):
     pass_form = ChangePass(user=request.user)
     mail_form = ChangeMail(user=request.user, initial={'old_mail':request.user.email})
     if request.method == 'POST':
-        if "files" in request.POST:
-            pass
+        print(request.POST)
+        if "add" in request.POST:
+            FilesUploadForm()
 
-        if "pass_change" in request.POST:
+        elif "pass_change" in request.POST:
             pass_form = ChangePass(user=request.user, data=request.POST)
             if pass_form.is_valid():
                 pass_form.save()

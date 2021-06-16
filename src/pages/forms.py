@@ -9,7 +9,7 @@ CSS_FORM_PASS_MAIL_CHANGE = "u-border-1 u-border-grey-30 u-input u-input-rectang
 class FilesUploadForm(forms.ModelForm):
     class Meta:
         model = FilesUpload
-        fields = ['file']
+        fields = ['file', 'type_fichier', 'utilisateur']
 
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Nom d\'utilisateur', 'class':CSS_CLASS_LOGIN_FIELD}))

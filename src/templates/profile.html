@@ -157,35 +157,40 @@
               <h2 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">Liste de vos
                 fichiers</h2>
               <div class="u-table u-table-responsive u-table-1">
-                <table class="u-table-entity">
-                  <colgroup>
-                    <col width="5.1%">
-                    <col width="61.6%">
-                    <col width="33.3%">
-                  </colgroup>
-                  <thead class="u-palette-1-light-1 u-table-header u-table-header-1">
-                    <tr style="height: 45px;">
-                      <th class="u-border-1 u-border-palette-1-light-1 u-table-cell"></th>
-                      <th class="u-border-1 u-border-palette-4-base u-table-cell">Nom du fichier</th>
-                      <th class="u-border-1 u-border-palette-4-base u-table-cell">Type du fichier</th>
-                    </tr>
-                  </thead>
-                  <tbody class="u-table-body">
-                    {% for f in files %}
-                    <tr style="height: 54px;">
-                      <td type="checkbox" class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4"></td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name }}</td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">{{f.type_fichier }}</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
+                <form method="post" id="file_form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <table class="u-table-entity">
+                    <colgroup>
+                      <col width="5.1%">
+                      <col width="61.6%">
+                      <col width="33.3%">
+                    </colgroup>
+                    <thead class="u-palette-1-light-1 u-table-header u-table-header-1">
+                      <tr style="height: 45px;">
+                        <th class="u-border-1 u-border-palette-1-light-1 u-table-cell"></th>
+                        <th class="u-border-1 u-border-palette-4-base u-table-cell">Nom du fichier</th>
+                        <th class="u-border-1 u-border-palette-4-base u-table-cell">Type du fichier</th>
+                      </tr>
+                    </thead>
+                    <tbody class="u-table-body">
+                      {% for f in files %}
+                      <tr style="height: 54px;">
+                        <td type="checkbox" class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4"></td>
+                        <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name }}</td>
+                        <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.type_fichier }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </form>
               </div>
               <div class="u-container-style u-group u-group-1">
                 <div class="u-container-layout">
-                  <input type="file" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" value="Ajoute" />
-                  <input type="submit" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-2" value="modifier" />
-                  <input type="submit" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3" value="supprimer" />
+                  <label for="file-add" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" >Ajouter
+                    <input type="file" hidden="true" id="file-add" name="add" form="file_form"value="Ajouter" />
+                  </label>  
+                  <input type="submit" name="change" form="file_form" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-2" value="modifier" />
+                  <input type="submit" name="del" form="file_form" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3" value="supprimer" />
                 </div>
               </div>
             </div>
