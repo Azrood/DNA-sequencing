@@ -1,14 +1,15 @@
 from collections import Counter
 
 import plotly
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 
 from pages.dna_analysis import analysis, analysis_plot
-from pages.forms import FilesUploadForm, SignupForm, SigninForm
+from pages.forms import FilesUploadForm, SignupForm, SigninForm, ChangePass
 from pages.models import FilesUpload, Utilisateur
 
 
@@ -78,3 +79,21 @@ def login_view(request):
     else:
         form = SigninForm()
     return render(request, "login.html", {'form': form})
+
+@login_required
+def parametre(request):
+    pass_form = ChangePass(user=request.user)
+    mail_form = ChangeMail(user=request.user,initial={'old_mail':request.user.email})
+    if request.method == 'POST':
+        if "pass_change" in request.POST:
+            pass_form = ChangePass(user=request.user, data=request.POST)
+            if pass_form.is_valid():
+                pass_form.save()
+                update_session_auth_hash(request, pass_form.user)
+                messages.success(request, 'Votre mot de passe a été changé avec succès')
+        elif "mail_change" in request.POST:
+            mail_form = ChangeMail(user=request.user, data=request.POST)
+            if mail_form.is_valid():
+                mail_form.save()
+                messages.success(request, 'Votre adresse mail a été modifiée avec succès')
+    return render(request, 'quiz/parametres.html', {'passform':pass_form, 'mailform':mail_form})

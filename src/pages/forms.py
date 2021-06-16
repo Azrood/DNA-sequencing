@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from pages.models import FilesUpload, Utilisateur, User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 CSS_CLASS_FIELD = "u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white"
 
@@ -56,5 +56,28 @@ class SigninForm(AuthenticationForm):
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'placeholder':'Entrez votre mot de passe', 'class':CSS_CLASS_FIELD}))
 
     error_messages = {
-        'invalid_login': ("Nom d`'utilisateur ou mot de passe incorrect"),
+        'invalid_login': ("Nom d'utilisateur ou mot de passe incorrect"),
+    }
+
+class ChangePass(PasswordChangeForm):
+    new_password1 = forms.CharField(
+        label="Nouveau mot de passe",
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Entrez votre nouveau mot de passe'}),
+        strip=False,
+        help_text="Au minimum 8 caractères.\nDoit contenir au moins un caractère numérique, une majuscule et un symbole",
+    )
+    new_password2 = forms.CharField(
+        label="Confirmation du nouveau mot de passe",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','placeholder':'Confirmer votre nouveau mot de passe'}),
+    )
+    old_password = forms.CharField(
+        label="Mot de passe actuel",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autofocus': True,'placeholder':'Entrer votre mot de passe actuel'})
+    )
+
+    error_messages = {
+        'password_mismatch':('Les mots de passe ne correspondent pas'),
+        'password_incorrect':("Votre ancien mot de passe est incorrect"),
     }
