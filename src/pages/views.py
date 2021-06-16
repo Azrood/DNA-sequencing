@@ -83,10 +83,17 @@ def login_view(request):
 
 @login_required(login_url="login")
 def profile(request):
+    utilisateur = Utilisateur.objects.get(user=request.user)
+    fichiers = utilisateur.filesupload_set.all()
+    
     pass_form = ChangePass(user=request.user)
     mail_form = ChangeMail(user=request.user, initial={'old_mail':request.user.email})
     if request.method == 'POST':
-        if "pass_change" in request.POST:
+        print(request.POST)
+        if "add" in request.POST:
+            FilesUploadForm()
+
+        elif "pass_change" in request.POST:
             pass_form = ChangePass(user=request.user, data=request.POST)
             if pass_form.is_valid():
                 pass_form.save()
@@ -99,4 +106,6 @@ def profile(request):
                 mail_form.save()
                 messages.success(request, 'Votre adresse mail a été modifiée avec succès')
                 redirect("/home/")
-    return render(request, 'profile.html', {'passform':pass_form, 'mailform':mail_form})
+    return render(request, 'profile.html', {'passform':pass_form,
+                                            'mailform':mail_form,
+                                            'files': fichiers})
