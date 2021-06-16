@@ -10,7 +10,7 @@
   <meta name="page_type" content="np-template-header-footer-from-plugin">
   <title>Page 1</title>
   <link rel="stylesheet" href="{% static 'nicepage.css' %}" media="screen">
-  <link rel="stylesheet" href="{% static 'register.css' %}" media="screen">
+  <link rel="stylesheet" href="{% static 'login.css' %}" media="screen">
   <script class="u-script" type="text/javascript" src="{% static 'jquery.js' %}" defer=""></script>
   <script class="u-script" type="text/javascript" src="{% static 'nicepage.js' %}" defer=""></script>
   <meta name="generator" content="Nicepage 3.17.2, nicepage.com">
@@ -99,26 +99,28 @@
             <form method="POST" class="u-clearfix u-form-spacing-28 u-inner-form"
               style="padding: 10px" source="custom" name="form">
                 {% csrf_token %}
-                {{form.non_field_errors}}
-                {{ form.errors }}
-              <div class="u-form-group u-form-name u-form-group-1">
-                <label for="name-5a14" class="u-form-control-hidden u-label" wfd-invisible="true"></label>
-                {{ form.username }}
-              </div>
-              <div class="u-form-password u-form-group u-form-group-2">
-                <label for="password-5a14" class="u-form-control-hidden u-label" wfd-invisible="true"></label>
-                {{ form.password }}
-              </div>
-              <div class="u-align-center u-form-group u-form-submit u-form-group-3">
-                <a href="#"
+
+                <div class="u-form-group u-form-name u-form-group-1">
+                  <label for="name-5a14" class="u-form-control-hidden u-label" wfd-invisible="true"></label>
+                  {{ form.username }}
+                </div>
+                <div class="u-form-password u-form-group u-form-group-2">
+                  <label for="password-5a14" class="u-form-control-hidden u-label" wfd-invisible="true"></label>
+                  {{ form.password }}
+                </div>
+                <div class="u-align-center u-form-group u-form-submit u-form-group-3">
+                  <a href="#"
                   class="u-border-2 u-border-black u-btn u-btn-submit u-button-style u-hover-black u-none u-text-black u-text-hover-white u-btn-1">Connexion<br>
                 </a>
                 <input type="submit" value="submit" class="u-form-control-hidden" wfd-invisible="true">
-         
-              
+                
+                
               </div>
+              
+              <b class="u-form-send-error"> {{ form.non_field_errors.as_text }}</b>
+              
               <!-- <div class="u-form-send-message u-form-send-success" wfd-invisible="true"> Thank you! Your message has been sent. </div>
-                <div class="u-form-send-error u-form-send-message" wfd-invisible="true"> Unable to send your message. Please fix errors then try again. </div> -->
+                  Unable to send your message. Please fix errors then try again. </div> -->
 
             </form>
           </div>

@@ -53,15 +53,18 @@
           <ul class="u-nav u-unstyled u-nav-1">
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Home.html" style="padding: 10px 20px;">Home</a>
+                href="{% url 'home' %}" style="padding: 10px 20px;">Accueil</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="About.html" style="padding: 10px 20px;">About</a>
+                href="{% url 'profile' %}" style="padding: 10px 20px;">Profil</a>
             </li>
             <li class="u-nav-item"><a
-                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Contact.html" style="padding: 10px 20px;">Contact</a>
+                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" 
+                {% if user.is_authenticated %} href="{% url 'disconnect' %}" style="padding: 10px 20px;">Se Déconnecter</a>
+              {% else %}
+              href="{% url 'login' %}" style="padding: 10px 20px;">Se Connecter</a>
+              {% endif %}
             </li>
           </ul>
         </div>
@@ -70,14 +73,14 @@
             <div class="u-sidenav-overflow">
               <div class="u-menu-close"></div>
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html"
-                    style="padding: 10px 20px;">Home</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'home' %}"
+                    style="padding: 10px 20px;">Accueil</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="About.html"
-                    style="padding: 10px 20px;">About</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'profile' %}"
+                    style="padding: 10px 20px;">Profil</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Contact.html"
-                    style="padding: 10px 20px;">Contact</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'disconnect' %}"
+                    style="padding: 10px 20px;">Se Déconnecter</a>
                 </li>
               </ul>
             </div>
