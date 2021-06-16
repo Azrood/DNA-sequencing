@@ -192,6 +192,7 @@
               
                 <hr>
                 <form method="post" id="add_file_form" enctype="multipart/form-data">
+                  {% csrf_token %}
                   {{ fileform.file }}
                   {{ fileform.type_fichier }}
                   <input id="envoyer" name="add" form="add_file_form" type="submit" value="Ajouter"
