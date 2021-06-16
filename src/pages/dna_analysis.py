@@ -13,11 +13,11 @@ import numpy as np
 
 def analysis(filename):
      
-    file = open(filename, 'r')
-    dna_file = SeqIO.parse(file,"fasta")
-    l = [record for record in dna_file] 
-    dna_record = l[0]
-    return dna_record
+    with open(filename, 'r') as f:
+        dna_file = SeqIO.parse(f,"fasta")
+        l = [record for record in dna_file] 
+        dna_record = l[0]
+        return dna_record
 
 
 def delta(x,y):

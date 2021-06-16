@@ -42,8 +42,9 @@
             <div class="u-form u-form-1">
               <div class="u-form-group u-form-message">
                 <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
-                <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
+                <textarea readonly rows="4" cols="50" id="message-d592" name="message"
                   class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                  style="white-space: pre ;background: #272822; color: #f8f8f2;"
                   required="">{{ dna.seq }}</textarea>
               </div>
             </div>
@@ -104,8 +105,9 @@
 
               <div class="u-form-group u-form-message">
                 <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
-                <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
+                <textarea readonly rows="4" cols="50" id="message-d592" name="message"
                   class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                  style="white-space: pre ;background: #272822; color: #f8f8f2;"
                   required=""> {{ transcribe }} </textarea>
               </div>
 
@@ -115,8 +117,9 @@
 
               <div class="u-form-group u-form-message">
                 <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
-                <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
+                <textarea readonly rows="4" cols="50" id="message-d592" name="message"
                   class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                  style="white-space: pre ;background: #272822; color: #f8f8f2;"
                   required="">{{ translate }}</textarea>
               </div>
 
@@ -127,8 +130,9 @@
             <div class="u-form u-form-4">
               <div class="u-form-group u-form-message">
                 <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
-                <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
+                <textarea readonly rows="4" cols="50" id="message-d592" name="message"
                   class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                  style="white-space: pre ;background: #272822; color: #f8f8f2;"
                   required="">{{ complement }}</textarea>
               </div>
 
@@ -136,16 +140,15 @@
             <br />
             <h4 class="u-text u-text-15">Fréquence de nucléotide :</h4>
             <h5 class="u-text u-text-16">
-              <span style="font-weight: 700;" class="u-text-black">R</span> : <span class="u-text-palette-1-base">{{
-                aa_freq.R }}</span>
+              <span style="font-weight: 700;" class="u-text-black">R</span> : <span class="u-text-palette-1-base">
+                {{ aa_freq.R }}</span>
             </h5>
             <h5 class="u-text u-text-17">
               <font color="#000000"><b>T</b>
               </font> : <span class="u-text-palette-1-base">{{ aa_freq.T }}</span>
             </h5>
             <h5 class="u-text u-text-18">
-              <span style="font-weight: 700;" class="u-text-black">H</span> : <span class="u-text-palette-1-base">{{
-                aa_freq.H }}</span>
+              <span style="font-weight: 700;" class="u-text-black">H</span> : <span class="u-text-palette-1-base">{{ aa_freq.H }}</span>
             </h5>
             <h5 class="u-text u-text-custom-color-1 u-text-19">
               <span style="font-weight: 700;" class="u-text-black">K</span>
@@ -161,8 +164,7 @@
               </font>: <span class="u-text-palette-1-base">{{ aa_freq.F }}</span>
             </h5>
             <h5 class="u-text u-text-22">
-              <span style="font-weight: 700;" class="u-text-black">L</span> : <span class="u-text-palette-1-base">{{
-                aa_freq.L }}</span>
+              <span style="font-weight: 700;" class="u-text-black">L</span> : <span class="u-text-palette-1-base">{{aa_freq.L }}</span>
             </h5>
             <h5 class="u-text u-text-custom-color-1 u-text-23">
               <font color="#000000"><b>G</b>
@@ -170,8 +172,7 @@
               </span>
             </h5>
             <h5 class="u-text u-text-24">
-              <span style="font-weight: 700;" class="u-text-black">S</span> : <span class="u-text-palette-1-base">{{
-                aa_freq.S }}</span>
+              <span style="font-weight: 700;" class="u-text-black">S</span> : <span class="u-text-palette-1-base">{{aa_freq.S }}</span>
             </h5>
             <h5 class="u-text u-text-25">
               <font color="#000000"><b>V</b>
@@ -184,8 +185,7 @@
                   </font> : <span class="u-text-palette-1-base">{{ aa_freq.I }}</span>
                 </h5>
                 <h5 class="u-text u-text-28">
-                  <span style="font-weight: 700;" class="u-text-black">A</span> : <span class="u-text-palette-1-base">{{
-                    aa_freq.A }}</span>
+                  <span style="font-weight: 700;" class="u-text-black">A</span> : <span class="u-text-palette-1-base">{{aa_freq.A }}</span>
                 </h5>
                 <h5 class="u-text u-text-custom-color-1 u-text-default u-text-29">
                   <span style="font-weight: 700;" class="u-text-black">Q</span>
@@ -193,8 +193,7 @@
                   </span>
                 </h5>
                 <h5 class="u-text u-text-30">
-                  <span style="font-weight: 700;" class="u-text-black">N</span> : <span class="u-text-palette-1-base">{{
-                    aa_freq.N }}</span>
+                  <span style="font-weight: 700;" class="u-text-black">N</span> : <span class="u-text-palette-1-base">{{aa_freq.N }}</span>
                 </h5>
                 <h5 class="u-text u-text-31">
                   <font color="#000000"><b>P</b>
