@@ -175,22 +175,23 @@
                     <tbody class="u-table-body">
                       {% for f in files %}
                       <tr style="height: 54px;">
-                        <td type="checkbox" class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4"></td>
-                        <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name }}</td>
+                        <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4"><input type="checkbox" id="{{ f.id }} "/></td>
+                        <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name |slice:"6:"}}</td>
                         <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.type_fichier }}</td>
                       </tr>
                       {% endfor %}
                     </tbody>
                   </table>
+                  <hr>
+                  {{ fileform.file }}
+                  {{ fileform.type_fichier }}
                 </form>
               </div>
+              <input type="submit" name="change" form="file_form" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3" value="Modifier" />
+              <input type="submit" name="del" form="file_form" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3" value="supprimer" />
               <div class="u-container-style u-group u-group-1">
                 <div class="u-container-layout">
-                  <label for="file-add" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" >Ajouter
-                    <input type="file" hidden="true" id="file-add" name="add" form="file_form"value="Ajouter" />
-                  </label>  
-                  <input type="submit" name="change" form="file_form" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-2" value="modifier" />
-                  <input type="submit" name="del" form="file_form" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3" value="supprimer" />
+                  <input id="envoyer" name="add" form="file_form" type="submit" value="Ajouter"  class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" />
                 </div>
               </div>
             </div>

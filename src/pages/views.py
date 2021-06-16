@@ -86,13 +86,16 @@ def profile(request):
     utilisateur = Utilisateur.objects.get(user=request.user)
     fichiers = utilisateur.filesupload_set.all()
     
+    file_form = FilesUploadForm()
     pass_form = ChangePass(user=request.user)
     mail_form = ChangeMail(user=request.user, initial={'old_mail':request.user.email})
     if request.method == 'POST':
-        print(request.POST)
         if "add" in request.POST:
-            FilesUploadForm()
-
+            file_form = FilesUploadForm(data=request.POST, files=request.FILES)
+            if file_form.is_valid():
+                file_form.save(user=request.user)
+        if "change" in request.POST:
+            pass
         elif "pass_change" in request.POST:
             pass_form = ChangePass(user=request.user, data=request.POST)
             if pass_form.is_valid():
@@ -108,4 +111,5 @@ def profile(request):
                 redirect("/home/")
     return render(request, 'profile.html', {'passform':pass_form,
                                             'mailform':mail_form,
+                                            'fileform': file_form,
                                             'files': fichiers})

@@ -7,9 +7,20 @@ CSS_CLASS_LOGIN_FIELD = "u-border-2 u-border-black u-border-no-left u-border-no-
 CSS_FORM_PASS_MAIL_CHANGE = "u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
 
 class FilesUploadForm(forms.ModelForm):
+    type_fichier = forms.CharField(max_length=30, label="type_fichier", widget=forms.TextInput(attrs={"placeholder": "Type du fichier"}))
     class Meta:
         model = FilesUpload
-        fields = ['file', 'type_fichier', 'utilisateur']
+        fields = ['file', 'type_fichier']
+    
+    def save(self, user, commit=True):
+        form = FilesUpload.objects.create(
+            file=self.cleaned_data['file'],
+            type_fichier=self.cleaned_data['type_fichier'],
+            utilisateur=Utilisateur.objects.get(user=user)
+        )
+        if commit:
+            form.save()
+        return form
 
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=150, label='Nom d\'utilisateur', widget=forms.TextInput(attrs={'placeholder':'Nom d\'utilisateur', 'class':CSS_CLASS_LOGIN_FIELD}))
