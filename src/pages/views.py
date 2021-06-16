@@ -56,7 +56,7 @@ def analyse_view(request,*args,**kwargs):
 
 @login_required(login_url="login")
 def vis3d_view(request,*args,**kwargs):
-    return render(request,"3dvis.html",{})
+    return render(request,"vis.html",{})
 
 def register(request):
     if request.method == 'POST':
