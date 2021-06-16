@@ -28,17 +28,20 @@ def home_view(request):
 
 @login_required(login_url="login")
 def analyse_view(request,*args,**kwargs):
+    utilisateur = Utilisateur.objects.get(user=request.user)
+    fichiers = utilisateur.filesupload_set.all()
     if request.method == 'POST':
         form = FilesUploadForm(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            return render(request,"analyse.html",{'form': form})
+        file_fasta = FilesUpload.objects.get(pk=request.POST['files'])
+        record = analysis(f"media/{file_fasta.file.name}")
+        context = {'fichiers': fichiers, 'form':form,'dna':record,'nuc_freq':dict(Counter(record.seq)),'nuc_graph':plotly.offline.plot(analysis_plot(record.seq), auto_open = False, output_type="div"),'compo_adn':{'GC':GC(record.seq),'AT':100-GC(record.seq)},'transcribe':record.seq.transcribe(),'translate':record.seq.translate(),'complement':record.seq.complement(),'aa_freq':dict(Counter(record.seq.translate())),'aa_graph':plotly.offline.plot(analysis_plot(record.seq.translate()), auto_open = False, output_type="div")}
+        return render(request, "analyse.html", context)
     else:
         form = FilesUploadForm()
     # amino_acids = [a for a in analysis().seq.translate().split('*')]
     # df = pd.DataFrame({'amino_acids':amino_acids})
-    content = {'form':form,'dna':analysis(),'nuc_freq':dict(Counter(analysis().seq)),'nuc_graph':plotly.offline.plot(analysis_plot(analysis().seq), auto_open = False, output_type="div"),'compo_adn':{'GC':GC(analysis().seq),'AT':100-GC(analysis().seq)},'transcribe':analysis().seq.transcribe(),'translate':analysis().seq.translate(),'complement':analysis().seq.complement(),'aa_freq':dict(Counter(analysis().seq.translate())),'aa_graph':plotly.offline.plot(analysis_plot(analysis().seq.translate()), auto_open = False, output_type="div")}
-    return render(request,"analyse.html",content)
+    context = {"fichiers": fichiers}
+    return render(request, "analyse.html", context)
 
 @login_required(login_url="login")
 def vis3d_view(request,*args,**kwargs):

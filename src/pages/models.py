@@ -16,6 +16,6 @@ class FilesUpload(models.Model):
     utilisateur = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, blank=True, null=True)
 
 @receiver(post_delete, sender=FilesUpload)
-def mymodel_delete(sender, instance, **kwargs):
+def file_delete(sender, instance, **kwargs):
     # Pass false so FileField doesn't save the model.
     instance.file.delete(False)

@@ -2,233 +2,247 @@
 {% load static %}
 
 {% block title%}Analyse de fichiers FASTA {% endblock %}
-{% block css_link %}{{ block.super }}<link rel="stylesheet" href="{% static 'analyse.css' %}" media="screen">{% endblock %}
-  
+{% block css_link %}{{ block.super }}
+<link rel="stylesheet" href="{% static 'analyse.css' %}" media="screen">{% endblock %}
+
 
 {% block main_body %}
-  <section class="u-align-center u-clearfix u-section-2" id="sec-c2d8">
-    <div class="u-clearfix u-sheet u-sheet-1">
-      <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-1">
-        <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
-          <li class="u-tab-item u-tab-item-1" role="presentation">
-            <a class="active u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-1"
-              id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7"
-              aria-selected="true">Informations</a>
-          </li>
-          <li class="u-tab-item" role="presentation">
-            <a class="u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-tab-link-2"
-              id="link-tab-092d" href="#tab-092d" role="tab" aria-controls="tab-092d" aria-selected="false">Graphe de
-              fréquence</a>
-          </li>
-        </ul>
-        <div class="u-tab-content">
-          <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-active u-tab-pane u-tab-pane-1"
-            id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
-            <div class="u-container-layout u-container-layout-1">
-              <h4 class="u-text u-text-1">Description : <span style="font-weight: 400;">{{ dna.description }}</span>
-              </h4>
-              <h4 class="u-text u-text-2">Séquence :</h4>
-              <div class="u-form u-form-1">
-                  <div class="u-form-group u-form-message">
-                    <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
-                    <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
-                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">{{ dna.seq }}</textarea>
-                  </div>
+<section class="u-align-center u-clearfix u-section-2" id="sec-c2d8">
+  <div class="u-clearfix u-sheet u-sheet-1">
+    <label for="files">Choisissez un de vos fichiers:</label>
+<form method="POST">
+  {% csrf_token %}
+    <select name="files" id="fic">
+      {% for f in fichiers %}
+      <option value="{{ f.id }}">{{ f.file.name |slice:"6:"}}</option>
+      {% endfor %}
+    </select>
+    <input type="submit" value="Analyser" />
+  </form>
+    <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-1">
+      <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
+        <li class="u-tab-item u-tab-item-1" role="presentation">
+          <a class="active u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-1"
+            id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7"
+            aria-selected="true">Informations</a>
+        </li>
+        <li class="u-tab-item" role="presentation">
+          <a class="u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-tab-link-2"
+            id="link-tab-092d" href="#tab-092d" role="tab" aria-controls="tab-092d" aria-selected="false">Graphe de
+            fréquence</a>
+        </li>
+      </ul>
+      <div class="u-tab-content">
+        <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-active u-tab-pane u-tab-pane-1"
+          id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
+          <div class="u-container-layout u-container-layout-1">
+            <h4 class="u-text u-text-1">Description : <span style="font-weight: 400;">{{ dna.description }}</span>
+            </h4>
+            <h4 class="u-text u-text-2">Séquence :</h4>
+            <div class="u-form u-form-1">
+              <div class="u-form-group u-form-message">
+                <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
+                <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
+                  class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                  required="">{{ dna.seq }}</textarea>
               </div>
-              <h4 class="u-text u-text-3">Fréquence de nucléotide :</h4>
-              <h4 class="u-text u-text-4">Composition complète de l'ADN :</h4>
-              <h5 class="u-text u-text-5">
-                <span style="font-weight: 700;" class="u-text-palette-1-base">A</span> : {{ nuc_freq.A }}
-              </h5>
-              <h5 class="u-text u-text-6">
-                <span style="font-weight: 700;" class="u-text-palette-1-base">GC</span> : {{ compo_adn.GC }}%
-              </h5>
-              <h5 class="u-text u-text-7">
-                <span style="font-weight: 700;" class="u-text-palette-2-base">G</span> : {{ nuc_freq.G }}
-              </h5>
-              <h5 class="u-text u-text-8">
-                <font color="#db545a"><b>AT</b>
-                </font> : {{ compo_adn.AT }}%
-              </h5>
-              <h5 class="u-text u-text-9">
-                <span style="font-weight: 700;" class="u-text-palette-3-dark-1">T</span> : {{ nuc_freq.T }}
-              </h5>
-              <h5 class="u-text u-text-custom-color-1 u-text-10">
-                <span style="font-weight: 700;">C</span>
-                <span class="u-text-black">: {{ nuc_freq.C }}</span>
-              </h5>
             </div>
-          </div>
-          <div class="u-container-style u-palette-1-light-3 u-tab-pane" id="tab-092d" role="tabpanel"
-            aria-labelledby="link-tab-092d">
-            <div class="u-container-layout u-container-layout-2">
-            <div align="center">
-            {{ nuc_graph|safe }}
-            </div>
-            </div>
+            <h4 class="u-text u-text-3">Fréquence de nucléotide :</h4>
+            <h4 class="u-text u-text-4">Composition complète de l'ADN :</h4>
+            <h5 class="u-text u-text-5">
+              <span style="font-weight: 700;" class="u-text-palette-1-base">A</span> : {{ nuc_freq.A }}
+            </h5>
+            <h5 class="u-text u-text-6">
+              <span style="font-weight: 700;" class="u-text-palette-1-base">GC</span> : {{ compo_adn.GC }}%
+            </h5>
+            <h5 class="u-text u-text-7">
+              <span style="font-weight: 700;" class="u-text-palette-2-base">G</span> : {{ nuc_freq.G }}
+            </h5>
+            <h5 class="u-text u-text-8">
+              <font color="#db545a"><b>AT</b>
+              </font> : {{ compo_adn.AT }}%
+            </h5>
+            <h5 class="u-text u-text-9">
+              <span style="font-weight: 700;" class="u-text-palette-3-dark-1">T</span> : {{ nuc_freq.T }}
+            </h5>
+            <h5 class="u-text u-text-custom-color-1 u-text-10">
+              <span style="font-weight: 700;">C</span>
+              <span class="u-text-black">: {{ nuc_freq.C }}</span>
+            </h5>
           </div>
         </div>
-      </div>
-      <h2 class="u-text u-text-default u-text-11">Opérations de synthèses des protéines sur l'ADN:</h2>
-      <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-2">
-        <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
-          <li class="u-tab-item u-tab-item-3" role="presentation">
-            <a class="active u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-3"
-              id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7"
-              aria-selected="true">Transcription</a>
-          </li>
-          <li class="u-tab-item u-tab-item-4" role="presentation">
-            <a class="u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-4"
-              id="tab-6e5a" href="#link-tab-6e5a" role="tab" aria-controls="link-tab-6e5a" aria-selected="false">Graphe
-              de fréquence des acides aminées</a>
-          </li>
-        </ul>
-        <div class="u-tab-content">
-          <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-active u-tab-pane u-tab-pane-3"
-            id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
-            <div class="u-container-layout u-container-layout-3">
-              <h4 class="u-text u-text-12">Transcription:</h4>
-              <div class="u-form u-form-2">
-
-                  <div class="u-form-group u-form-message">
-                    <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
-                    <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
-                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required=""> {{ transcribe }} </textarea>
-                  </div>
-
-              </div>
-              <h4 class="u-text u-text-13">Traduction :</h4>
-              <div class="u-form u-form-3">
-                
-                  <div class="u-form-group u-form-message">
-                    <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
-                    <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
-                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">{{ translate }}</textarea>
-                  </div>
-
-              </div>
-              <br/>
-              <h4 class="u-text u-text-14">Complement :</h4>
-              <br/>
-              <div class="u-form u-form-4">
-                  <div class="u-form-group u-form-message">
-                    <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
-                    <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
-                      class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">{{ complement }}</textarea>
-                  </div>
-
-              </div>
-                <br/>
-              <h4 class="u-text u-text-15">Fréquence de nucléotide :</h4>
-              <h5 class="u-text u-text-16">
-                <span style="font-weight: 700;" class="u-text-black">R</span> : <span
-                  class="u-text-palette-1-base">{{ aa_freq.R }}</span>
-              </h5>
-              <h5 class="u-text u-text-17">
-                <font color="#000000"><b>T</b>
-                </font> : <span class="u-text-palette-1-base">{{ aa_freq.T }}</span>
-              </h5>
-              <h5 class="u-text u-text-18">
-                <span style="font-weight: 700;" class="u-text-black">H</span> : <span
-                  class="u-text-palette-1-base">{{ aa_freq.H }}</span>
-              </h5>
-              <h5 class="u-text u-text-custom-color-1 u-text-19">
-                <span style="font-weight: 700;" class="u-text-black">K</span>
-                <span class="u-text-black">: <span class="u-text-palette-1-base">{{ aa_freq.K }}</span>
-                </span>
-              </h5>
-              <h5 class="u-text u-text-20">
-                <font color="#000000"><b>E</b>
-                </font> : <span class="u-text-palette-1-base">{{ aa_freq.E }}</span>
-              </h5>
-              <h5 class="u-text u-text-21">
-                <font color="#000000"><b>F&nbsp;</b>
-                </font>: <span class="u-text-palette-1-base">{{ aa_freq.F }}</span>
-              </h5>
-              <h5 class="u-text u-text-22">
-                <span style="font-weight: 700;" class="u-text-black">L</span> : <span
-                  class="u-text-palette-1-base">{{ aa_freq.L }}</span>
-              </h5>
-              <h5 class="u-text u-text-custom-color-1 u-text-23">
-                <font color="#000000"><b>G</b>
-                </font>&nbsp;<span class="u-text-black">: <span class="u-text-palette-1-base">{{ aa_freq.G }}</span>
-                </span>
-              </h5>
-              <h5 class="u-text u-text-24">
-                <span style="font-weight: 700;" class="u-text-black">S</span> : <span
-                  class="u-text-palette-1-base">{{ aa_freq.S }}</span>
-              </h5>
-              <h5 class="u-text u-text-25">
-                <font color="#000000"><b>V</b>
-                </font> : <span class="u-text-palette-1-base">{{ aa_freq.V }}</span>
-              </h5>
-              <div class="u-container-style u-group u-group-1">
-                <div class="u-container-layout">
-                  <h5 class="u-text u-text-27">
-                    <font color="#000000"><b>I</b>
-                    </font> : <span class="u-text-palette-1-base">{{ aa_freq.I }}</span>
-                  </h5>
-                  <h5 class="u-text u-text-28">
-                    <span style="font-weight: 700;" class="u-text-black">A</span> : <span
-                      class="u-text-palette-1-base">{{ aa_freq.A }}</span>
-                  </h5>
-                  <h5 class="u-text u-text-custom-color-1 u-text-default u-text-29">
-                    <span style="font-weight: 700;" class="u-text-black">Q</span>
-                    <span class="u-text-black">: <span class="u-text-palette-1-base">{{ aa_freq.Q }}</span>
-                    </span>
-                  </h5>
-                  <h5 class="u-text u-text-30">
-                    <span style="font-weight: 700;" class="u-text-black">N</span> : <span
-                      class="u-text-palette-1-base">{{ aa_freq.N }}</span>
-                  </h5>
-                  <h5 class="u-text u-text-31">
-                    <font color="#000000"><b>P</b>
-                    </font> : <span class="u-text-palette-1-base">{{ aa_freq.P }}</span>
-                  </h5>
-                  <h5 class="u-text u-text-default u-text-32">
-                    <span style="font-weight: 700;" class="u-text-black">Y</span> : <span
-                      class="u-text-palette-1-base">{{ aa_freq.Y }}</span>
-                  </h5>
-                  <h5 class="u-text u-text-custom-color-1 u-text-33">
-                    <span style="font-weight: 700;" class="u-text-black">W</span>
-                    <span class="u-text-black">: <span class="u-text-palette-1-base">{{ aa_freq.W }}</span>
-                    </span>
-                  </h5>
-                  <h5 class="u-text u-text-default u-text-34">
-                    <span style="font-weight: 700;" class="u-text-black">D</span> : <span
-                      class="u-text-palette-1-base">{{ aa_freq.D }}</span>
-                  </h5>
-                  <h5 class="u-text u-text-default u-text-35">
-                    <font color="#000000"><b>M</b>
-                    </font> : <span class="u-text-palette-1-base">{{ aa_freq.M }}</span>
-                  </h5>
-                </div>
-              </div>
-              <h5 class="u-text u-text-36">
-                <span style="font-weight: 700;" class="u-text-black">C</span> : <span
-                  class="u-text-palette-1-base">{{ aa_freq.C }}</span>
-              </h5>
-              {% comment %} {{ df.to_html|safe }} {% endcomment %}
-            </div>
-          </div>
-          <div class="u-align-center u-container-style u-palette-1-light-3 u-tab-pane u-tab-pane-4" id="link-tab-6e5a"
-            role="tabpanel" aria-labelledby="tab-6e5a">
-            <div class="u-container-layout u-container-layout-5">
-
+        <div class="u-container-style u-palette-1-light-3 u-tab-pane" id="tab-092d" role="tabpanel"
+          aria-labelledby="link-tab-092d">
+          <div class="u-container-layout u-container-layout-2">
             <div align="center">
-            {{ aa_graph|safe }}
-            </div>
+              {{ nuc_graph|safe }}
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <section class="u-align-center u-clearfix u-section-3" id="sec-161c">
-    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1"></div>
-  </section>
-  <section class="u-clearfix u-section-4" id="sec-8282">
-    <div class="u-clearfix u-sheet u-sheet-1"></div>
-  </section>
+    <h2 class="u-text u-text-default u-text-11">Opérations de synthèses des protéines sur l'ADN:</h2>
+    <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-2">
+      <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
+        <li class="u-tab-item u-tab-item-3" role="presentation">
+          <a class="active u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-3"
+            id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7"
+            aria-selected="true">Transcription</a>
+        </li>
+        <li class="u-tab-item u-tab-item-4" role="presentation">
+          <a class="u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-4"
+            id="tab-6e5a" href="#link-tab-6e5a" role="tab" aria-controls="link-tab-6e5a" aria-selected="false">Graphe
+            de fréquence des acides aminées</a>
+        </li>
+      </ul>
+      <div class="u-tab-content">
+        <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-active u-tab-pane u-tab-pane-3"
+          id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
+          <div class="u-container-layout u-container-layout-3">
+            <h4 class="u-text u-text-12">Transcription:</h4>
+            <div class="u-form u-form-2">
+
+              <div class="u-form-group u-form-message">
+                <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
+                <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
+                  class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                  required=""> {{ transcribe }} </textarea>
+              </div>
+
+            </div>
+            <h4 class="u-text u-text-13">Traduction :</h4>
+            <div class="u-form u-form-3">
+
+              <div class="u-form-group u-form-message">
+                <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
+                <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
+                  class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                  required="">{{ translate }}</textarea>
+              </div>
+
+            </div>
+            <br />
+            <h4 class="u-text u-text-14">Complement :</h4>
+            <br />
+            <div class="u-form u-form-4">
+              <div class="u-form-group u-form-message">
+                <label for="message-d592" class="u-form-control-hidden u-label">Message</label>
+                <textarea readonly placeholder="Enter your message" rows="4" cols="50" id="message-d592" name="message"
+                  class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+                  required="">{{ complement }}</textarea>
+              </div>
+
+            </div>
+            <br />
+            <h4 class="u-text u-text-15">Fréquence de nucléotide :</h4>
+            <h5 class="u-text u-text-16">
+              <span style="font-weight: 700;" class="u-text-black">R</span> : <span class="u-text-palette-1-base">{{
+                aa_freq.R }}</span>
+            </h5>
+            <h5 class="u-text u-text-17">
+              <font color="#000000"><b>T</b>
+              </font> : <span class="u-text-palette-1-base">{{ aa_freq.T }}</span>
+            </h5>
+            <h5 class="u-text u-text-18">
+              <span style="font-weight: 700;" class="u-text-black">H</span> : <span class="u-text-palette-1-base">{{
+                aa_freq.H }}</span>
+            </h5>
+            <h5 class="u-text u-text-custom-color-1 u-text-19">
+              <span style="font-weight: 700;" class="u-text-black">K</span>
+              <span class="u-text-black">: <span class="u-text-palette-1-base">{{ aa_freq.K }}</span>
+              </span>
+            </h5>
+            <h5 class="u-text u-text-20">
+              <font color="#000000"><b>E</b>
+              </font> : <span class="u-text-palette-1-base">{{ aa_freq.E }}</span>
+            </h5>
+            <h5 class="u-text u-text-21">
+              <font color="#000000"><b>F&nbsp;</b>
+              </font>: <span class="u-text-palette-1-base">{{ aa_freq.F }}</span>
+            </h5>
+            <h5 class="u-text u-text-22">
+              <span style="font-weight: 700;" class="u-text-black">L</span> : <span class="u-text-palette-1-base">{{
+                aa_freq.L }}</span>
+            </h5>
+            <h5 class="u-text u-text-custom-color-1 u-text-23">
+              <font color="#000000"><b>G</b>
+              </font>&nbsp;<span class="u-text-black">: <span class="u-text-palette-1-base">{{ aa_freq.G }}</span>
+              </span>
+            </h5>
+            <h5 class="u-text u-text-24">
+              <span style="font-weight: 700;" class="u-text-black">S</span> : <span class="u-text-palette-1-base">{{
+                aa_freq.S }}</span>
+            </h5>
+            <h5 class="u-text u-text-25">
+              <font color="#000000"><b>V</b>
+              </font> : <span class="u-text-palette-1-base">{{ aa_freq.V }}</span>
+            </h5>
+            <div class="u-container-style u-group u-group-1">
+              <div class="u-container-layout">
+                <h5 class="u-text u-text-27">
+                  <font color="#000000"><b>I</b>
+                  </font> : <span class="u-text-palette-1-base">{{ aa_freq.I }}</span>
+                </h5>
+                <h5 class="u-text u-text-28">
+                  <span style="font-weight: 700;" class="u-text-black">A</span> : <span class="u-text-palette-1-base">{{
+                    aa_freq.A }}</span>
+                </h5>
+                <h5 class="u-text u-text-custom-color-1 u-text-default u-text-29">
+                  <span style="font-weight: 700;" class="u-text-black">Q</span>
+                  <span class="u-text-black">: <span class="u-text-palette-1-base">{{ aa_freq.Q }}</span>
+                  </span>
+                </h5>
+                <h5 class="u-text u-text-30">
+                  <span style="font-weight: 700;" class="u-text-black">N</span> : <span class="u-text-palette-1-base">{{
+                    aa_freq.N }}</span>
+                </h5>
+                <h5 class="u-text u-text-31">
+                  <font color="#000000"><b>P</b>
+                  </font> : <span class="u-text-palette-1-base">{{ aa_freq.P }}</span>
+                </h5>
+                <h5 class="u-text u-text-default u-text-32">
+                  <span style="font-weight: 700;" class="u-text-black">Y</span> : <span class="u-text-palette-1-base">{{ aa_freq.Y }}</span>
+                </h5>
+                <h5 class="u-text u-text-custom-color-1 u-text-33">
+                  <span style="font-weight: 700;" class="u-text-black">W</span>
+                  <span class="u-text-black">: <span class="u-text-palette-1-base">{{ aa_freq.W }}</span>
+                  </span>
+                </h5>
+                <h5 class="u-text u-text-default u-text-34">
+                  <span style="font-weight: 700;" class="u-text-black">D</span> : <span class="u-text-palette-1-base">
+                    {{ aa_freq.D }}</span>
+                </h5>
+                <h5 class="u-text u-text-default u-text-35">
+                  <font color="#000000"><b>M</b>
+                  </font> : <span class="u-text-palette-1-base">{{ aa_freq.M }}</span>
+                </h5>
+              </div>
+            </div>
+            <h5 class="u-text u-text-36">
+              <span style="font-weight: 700;" class="u-text-black">C</span> : <span class="u-text-palette-1-base">
+                {{ aa_freq.C }}</span>
+            </h5>
+            {% comment %} {{ df.to_html|safe }} {% endcomment %}
+          </div>
+        </div>
+        <div class="u-align-center u-container-style u-palette-1-light-3 u-tab-pane u-tab-pane-4" id="link-tab-6e5a"
+          role="tabpanel" aria-labelledby="tab-6e5a">
+          <div class="u-container-layout u-container-layout-5">
+
+            <div align="center">
+              {{ aa_graph|safe }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="u-align-center u-clearfix u-section-3" id="sec-161c">
+  <div class="u-clearfix u-sheet u-valign-middle u-sheet-1"></div>
+</section>
+<section class="u-clearfix u-section-4" id="sec-8282">
+  <div class="u-clearfix u-sheet u-sheet-1"></div>
+</section>
 
 {% endblock %}

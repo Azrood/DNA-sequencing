@@ -6,12 +6,12 @@ import plotly.graph_objects as go
 import plotly
 from Bio.SeqUtils import GC
 
-file = open(f'{settings.MEDIA_ROOT}/covid19.fasta','r')
-dna_file = SeqIO.parse(file,"fasta")
-l = [record for record in dna_file] 
 
-def analysis():
+def analysis(filename):
      
+    file = open(filename, 'r')
+    dna_file = SeqIO.parse(file,"fasta")
+    l = [record for record in dna_file] 
     dna_record = l[0]
     return dna_record
 
