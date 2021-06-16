@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title%}Analyse de fichiers FASTA {% endblock %}
-{% block css_link %}{{ block.super }}<link rel="stylesheet" href="analyse.css" media="screen">{% endblock %}
+{% block css_link %}{{ block.super }}<link rel="stylesheet" href="{% static 'analyse.css' %}" media="screen">{% endblock %}
   
 
 {% block main_body %}
