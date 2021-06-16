@@ -14,6 +14,8 @@ from pages.forms import (ChangeMail, ChangePass, FilesUploadForm, SigninForm,
                          SignupForm)
 from pages.models import FilesUpload, Utilisateur
 from Bio.SeqUtils import GC
+from Bio import SeqIO, pairwise2
+from Bio.pairwise2 import format_alignment
 import pandas as pd
 
 # Create your views here.
@@ -30,7 +32,17 @@ def compare(request):
         filename_second = f"media/{file_fasta_second.file.name}"
         record_first = analysis(filename_first)
         record_second = analysis(filename_second)
-        return render(request, "compare.html",{"fichiers": fichiers, 'dotplot':dotplotx(record_first.seq[0:10],record_second.seq[0:10])})
+        with open(filename_first, 'r') as f1, open(filename_second, 'r') as f2:
+            seq1 = list(SeqIO.parse(f1,"fasta"))[0].seq
+            seq2 = list(SeqIO.parse(f2,"fasta"))[0].seq
+        alignments = pairwise2.align.globalxx(seq1[:5000], seq2[:5000])
+        comprsn = format_alignment(*alignments[0], full_sequences=True)
+        comprsn += f"Pourcentage : {alignments[0].score*100/5000}%\n"
+        return render(request, "compare.html",{"fichiers": fichiers,
+                                                "cmprsn": comprsn,
+                                               "rec1": record_first,
+                                               "rec2": record_second,
+                                               'dotplot':dotplotx(record_first.seq[0:10],record_second.seq[0:10])})
     return render(request, "compare.html",{"fichiers": fichiers})
 
 @login_required(login_url="login")
