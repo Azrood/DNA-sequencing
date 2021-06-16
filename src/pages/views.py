@@ -13,6 +13,8 @@ from pages.dna_analysis import analysis, analysis_plot
 from pages.forms import (ChangeMail, ChangePass, FilesUploadForm, SigninForm,
                          SignupForm)
 from pages.models import FilesUpload, Utilisateur
+from Bio.SeqUtils import GC
+import pandas as pd
 
 # Create your views here.
 
@@ -33,9 +35,10 @@ def analyse_view(request,*args,**kwargs):
             return render(request,"analyse.html",{'form': form})
     else:
         form = FilesUploadForm()
-    print(Counter(analysis().seq))
-
-    return render(request,"analyse.html",{'form': form,'dna_desc':analysis().description,'nuc_freq':dict(Counter(analysis().seq)),'graph_div':plotly.offline.plot(analysis_plot(), auto_open = False, output_type="div")})
+    # amino_acids = [a for a in analysis().seq.translate().split('*')]
+    # df = pd.DataFrame({'amino_acids':amino_acids})
+    content = {'form':form,'dna':analysis(),'nuc_freq':dict(Counter(analysis().seq)),'nuc_graph':plotly.offline.plot(analysis_plot(analysis().seq), auto_open = False, output_type="div"),'compo_adn':{'GC':GC(analysis().seq),'AT':100-GC(analysis().seq)},'transcribe':analysis().seq.transcribe(),'translate':analysis().seq.translate(),'complement':analysis().seq.complement(),'aa_freq':dict(Counter(analysis().seq.translate())),'aa_graph':plotly.offline.plot(analysis_plot(analysis().seq.translate()), auto_open = False, output_type="div")}
+    return render(request,"analyse.html",content)
 
 @login_required(login_url="login")
 def vis3d_view(request,*args,**kwargs):
