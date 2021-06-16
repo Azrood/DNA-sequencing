@@ -95,7 +95,6 @@ def profile(request):
             if file_form.is_valid():
                 file_form.save(user=request.user)
         elif "del" in request.POST:
-            print(request.POST )
             ids =[x for x in request.POST.keys() if x not in ("csrfmiddlewaretoken", "del")]
             files = FilesUpload.objects.filter(id__in=ids)
             for f in files:
