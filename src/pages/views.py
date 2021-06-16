@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 
-from pages.dna_analysis import analysis, analysis_plot
+from pages.dna_analysis import analysis, analysis_plot, dotplotx
 from pages.forms import (ChangeMail, ChangePass, FilesUploadForm, SigninForm,
                          SignupForm)
 from pages.models import FilesUpload, Utilisateur
@@ -20,7 +20,7 @@ import pandas as pd
 
 @login_required(login_url="login")
 def compare(request):
-    return render(request, "base.html")
+    return render(request, "compare.html",{'dotplot':dotplotx(analysis().seq[0:10],analysis().seq[0:10])})
 
 @login_required(login_url="login")
 def home_view(request):
