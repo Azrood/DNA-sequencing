@@ -175,8 +175,9 @@
                     <tbody class="u-table-body">
                       {% for f in files %}
                       <tr style="height: 54px;">
-                        <td type="checkbox" class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4"></td>
-                        <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name }}</td>
+                        <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4">
+                          <input type="checkbox" name="{{ f.id }} " /></td>
+                        <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name |slice:"6:"}}</td>
                         <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.type_fichier }}</td>
                       </tr>
                       {% endfor %}
@@ -185,13 +186,19 @@
                 </form>
               </div>
               <div class="u-container-style u-group u-group-1">
-                <div class="u-container-layout">
-                  <label for="file-add" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" >Ajouter
-                    <input type="file" hidden="true" id="file-add" name="add" form="file_form"value="Ajouter" />
-                  </label>  
-                  <input type="submit" name="change" form="file_form" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-2" value="modifier" />
-                  <input type="submit" name="del" form="file_form" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3" value="supprimer" />
-                </div>
+                <input type="submit" name="del" form="file_form"
+                  class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3"
+                  value="supprimer" />
+              
+                <hr>
+                <form method="post" id="add_file_form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ fileform.file }}
+                  {{ fileform.type_fichier }}
+                  <input id="envoyer" name="add" form="add_file_form" type="submit" value="Ajouter"
+                  class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" />
+                </form>
+              
               </div>
             </div>
           </div>
@@ -199,18 +206,21 @@
             role="tabpanel" aria-labelledby="tab-6e5a">
             <div class="u-container-layout u-container-layout-3">
               <div class="u-form u-form-1">
-                <b><h3>Changer votre mot de passe</h3></b>
+                <b>
+                  <h3>Changer votre mot de passe</h3>
+                </b>
                 <b> {{ passform.errors.as_text }} </b>
                 {% if messages %}
-							
-									{% for message in messages%}
-								
-                  <b class="u-form-send-success"> 	{{ message.as_text }}</b>
-									{% endfor %}
-								
-								{% endif %}
-                <form action="#" name="pass_change" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
-                  style="padding: 10px" source="custom" name="form">
+
+                {% for message in messages%}
+
+                <b class="u-form-send-success"> {{ message.as_text }}</b>
+                {% endfor %}
+
+                {% endif %}
+                <form action="#" name="pass_change" method="POST"
+                  class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px"
+                  source="custom" name="form">
                   {% csrf_token %}
                   <div class="u-form-group u-form-name">
                     <label for="name-efdd" class="u-form-control-hidden u-label"></label>
@@ -226,24 +236,28 @@
                     {{ passform.new_password2}}
                   </div>
                   <div class="u-align-center u-form-group u-form-submit">
-                   <input type="submit" value="Modifier le mot de passe" name="pass_change" class="u-btn u-btn-submit u-button-style u-btn-4">
-                   <input type="hidden" value="Modifier le mot de passe" name="pass_change" class="u-btn u-btn-submit u-button-style u-btn-4">
+                    <input type="submit" value="Modifier le mot de passe" name="pass_change"
+                      class="u-btn u-btn-submit u-button-style u-btn-4">
+                    <input type="hidden" value="Modifier le mot de passe" name="pass_change"
+                      class="u-btn u-btn-submit u-button-style u-btn-4">
                   </div>
-                  
+
                 </form>
 
               </div>
               <div class="u-form u-form-1">
-                <b><h3>Changer votre adresse mail</h3></b>
+                <b>
+                  <h3>Changer votre adresse mail</h3>
+                </b>
                 <b class="u-form-send-error"> {{mailform.non_field_errors.as_text}} </b>
                 {% if messages %}
-                
-									{% for message in messages%}
-								
-                  <b class="u-form-send-success"> 	{{message.as_text}}</b>
-									{%endfor%}
-								
-								{%endif%}
+
+                {% for message in messages%}
+
+                <b class="u-form-send-success"> {{message.as_text}}</b>
+                {%endfor%}
+
+                {%endif%}
                 <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
                   style="padding: 10px" source="custom" name="form">
                   {% csrf_token %}
@@ -264,13 +278,13 @@
                     <a href="#" class="u-btn u-btn-submit u-button-style u-btn-4">Modifier l'email'</a>
                     <input type="submit" value="submit" name="mail_change" class="u-form-control-hidden">
                   </div>
-                  
+
                 </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   </section>
   <section class="u-align-center u-clearfix u-section-3" id="sec-161c">
     <div class="u-clearfix u-sheet u-valign-middle u-sheet-1"></div>
