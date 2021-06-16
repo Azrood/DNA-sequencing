@@ -4,6 +4,7 @@ from Bio import SeqIO
 from collections import Counter
 import plotly.graph_objects as go
 import plotly
+from Bio.SeqUtils import GC
 
 file = open(f'{settings.MEDIA_ROOT}/covid19.fasta','r')
 dna_file = SeqIO.parse(file,"fasta")
@@ -18,6 +19,6 @@ def analysis_plot():
     dna_freq = Counter(analysis().seq)
     fig = go.Figure(
     data=[go.Bar(x=list(dna_freq.keys()),y=list(dna_freq.values()))],
-    layout_title_text="test"
+    layout_title_text="Graphe de fréquence des nucléotides "
     )
     return fig
