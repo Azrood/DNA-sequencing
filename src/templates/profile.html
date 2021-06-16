@@ -154,7 +154,7 @@
           <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-active u-tab-pane u-tab-pane-1"
             id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
             <div class="u-container-layout u-container-layout-1">
-              <h2 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">Liste de
+              <h2 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">Liste de vos
                 fichiers</h2>
               <div class="u-table u-table-responsive u-table-1">
                 <table class="u-table-entity">
@@ -171,37 +171,21 @@
                     </tr>
                   </thead>
                   <tbody class="u-table-body">
+                    {% for f in files %}
                     <tr style="height: 54px;">
-                      <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4"></td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
+                      <td type="checkbox" class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4"></td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name }}</td>
+                      <td class="u-border-1 u-border-grey-30 u-table-cell">{{f.type_fichier }}</td>
                     </tr>
-                    <tr style="height: 55px;">
-                      <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7"></td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    </tr>
-                    <tr style="height: 55px;">
-                      <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-10"></td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    </tr>
-                    <tr style="height: 55px;">
-                      <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13"></td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                      <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
               <div class="u-container-style u-group u-group-1">
                 <div class="u-container-layout">
-                  <a href="https://nicepage.com/c/product-list-website-templates"
-                    class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1">charger</a>
-                  <a href="https://nicepage.com/c/product-list-website-templates"
-                    class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-2">modifier</a>
-                  <a href="https://nicepage.com/c/product-list-website-templates"
-                    class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3">supprimer</a>
+                  <input type="file" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" value="Ajoute" />
+                  <input type="submit" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-2" value="modifier" />
+                  <input type="submit" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3" value="supprimer" />
                 </div>
               </div>
             </div>
