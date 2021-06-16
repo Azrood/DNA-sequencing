@@ -20,7 +20,18 @@ import pandas as pd
 
 @login_required(login_url="login")
 def compare(request):
-    return render(request, "compare.html",{'dotplot':dotplotx(analysis().seq[0:10],analysis().seq[0:10])})
+    utilisateur = Utilisateur.objects.get(user=request.user)
+    fichiers = utilisateur.filesupload_set.all()
+    if request.method == "POST":
+        file_fasta_first = FilesUpload.objects.get(pk=request.POST['files_1'])
+        file_fasta_second = FilesUpload.objects.get(pk=request.POST['files_2'])
+        
+        filename_first = f"media/{file_fasta_first.file.name}"
+        filename_second = f"media/{file_fasta_second.file.name}"
+        record_first = analysis(filename_first)
+        record_second = analysis(filename_second)
+        return render(request, "compare.html",{"fichiers": fichiers, 'dotplot':dotplotx(record_first.seq[0:10],record_second.seq[0:10])})
+    return render(request, "compare.html",{"fichiers": fichiers})
 
 @login_required(login_url="login")
 def home_view(request):
