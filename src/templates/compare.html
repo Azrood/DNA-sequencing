@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_link %}{{ block.super }}<link rel="stylesheet" href="{% static 'compare.css' %}" media="screen">{% endblock %}
+
+ {% block main_body %}
+      <section class="u-align-center u-clearfix u-section-2" id="sec-c2d8">
+        <div class="u-clearfix u-sheet u-sheet-1">
+          <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-1">
+            <form method="POST">
+              {% csrf_token %}
+              <select class="form-select" name="files_1" id="fic">
+                {% for f in fichiers %}
+                <option value="{{ f.id }}">{{ f.file.name |slice:"6:"}}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <select class="form-select" name="files_2" id="fic">
+                {% for f in fichiers %}
+                <option value="{{ f.id }}">{{ f.file.name |slice:"6:"}}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <input type="submit" value="Comparer" class="btn btn-primary" />
+            </form>
+            <br>
+            <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
+              <li class="u-tab-item u-tab-item-1" role="presentation">
+                <a class="active u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-1"
+                  id="link-tab-3cf0" href="#tab-3cf0" role="tab" aria-controls="tab-3cf0"
+                  aria-selected="true">Informations</a>
+              </li>
+              <li class="u-tab-item" role="presentation">
+                <a class="u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-tab-link-2"
+                  id="link-tab-092d" href="#tab-092d" role="tab" aria-controls="tab-092d" aria-selected="false">Dotplot</a>
+              </li>
+            </ul>
+            <div class="u-tab-content">
+              <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-active u-tab-pane u-tab-pane-1"
+                id="tab-3cf0" role="tabpanel" aria-labelledby="link-tab-3cf0">
+                <div class="u-container-layout u-container-layout-1">
+                  <h4 class="u-text u-text-default u-text-1">Description de la premiere séquence :</h4>
+                  <h4 class="u-text u-text-default u-text-2">{{ rec1.description }}</h4>
+                  <h4 class="u-text u-text-default u-text-3">Description de la deuxieme séquence :</h4>
+                  <h4 class="u-text u-text-default u-text-4">{{ rec2.description }}</h4>
+                  <h4 class="u-text u-text-default u-text-3">Comparaison des 2 séquences </h4>
+                  <textarea rows="6" cols="120" style="white-space: pre ;background: #272822; color: #f8f8f2;" readonly>{{ cmprsn }}</textarea>
+                </div>
+              </div>
+              <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-pane" id="tab-092d" role="tabpanel"
+                aria-labelledby="link-tab-092d">
+                <div class="u-container-layout u-container-layout-2">
+                  <div align="center">
+                  <h4>Ce graphe montre les correlations entre les deux séquençes</h4>
+                    {{ dotplot|safe }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+{% endblock %}

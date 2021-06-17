@@ -1,0 +1,314 @@
+{% load static %}
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="keywords" content="Analyse&nbsp;de&nbsp;séquence&nbsp;ADN">
+  <meta name="description" content="">
+  <meta name="page_type" content="np-template-header-footer-from-plugin">
+  <title>analyse</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'nicepage.css' %}" media="screen">
+  <link rel="stylesheet" href="{% static 'profile.css' %}" media="screen">
+  <script class="u-script" type="text/javascript" src="{% static 'jquery.js' %}" defer=""></script>
+  <script class="u-script" type="text/javascript" src="{% static 'nicepage.js' %}" defer=""></script>
+  <meta name="generator" content="Nicepage 3.17.2, nicepage.com">
+  <link id="u-theme-google-font" rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+  <link id="u-page-google-font" rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+
+
+
+
+
+  <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": ""
+}</script>
+  <meta property="og:title" content="analyse">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#478ac9">
+</head>
+
+<body class="u-body">
+  <header class="u-clearfix u-header u-header" id="sec-d374">
+    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+      <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+        <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+          <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+            href="#">
+            <svg>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use>
+            </svg>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <defs>
+                <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                  <rect y="1" width="16" height="2"></rect>
+                  <rect y="7" width="16" height="2"></rect>
+                  <rect y="13" width="16" height="2"></rect>
+                </symbol>
+              </defs>
+            </svg>
+          </a>
+        </div>
+        <div class="u-custom-menu u-nav-container">
+          <ul class="u-nav u-unstyled u-nav-1">
+            <li class="u-nav-item"><a
+                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                href="{% url 'home' %}" style="padding: 10px 20px;">Accueil</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                href="{% url 'profile' %}" style="padding: 10px 20px;">Profil</a>
+            </li>
+            <li class="u-nav-item"><a
+                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" 
+                {% if user.is_authenticated %} href="{% url 'disconnect' %}" style="padding: 10px 20px;">Déconnexion</a>
+              {% else %}
+              href="{% url 'login' %}" style="padding: 10px 20px;">Connexion</a>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+          <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+            <div class="u-sidenav-overflow">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'home' %}"
+                    style="padding: 10px 20px;">Accueil</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'profile' %}"
+                    style="padding: 10px 20px;">Profil</a>
+                </li>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'disconnect' %}"
+                    style="padding: 10px 20px;">Déconnexion</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <section class="u-clearfix u-section-1" id="sec-5e64">
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <h1 class="u-text u-text-default u-text-1">Bienvenue <span style="font-weight: 700;">{{ user.username }}</span>
+      </h1>
+      <div class="u-expanded-width u-list u-list-1">
+        <div class="u-repeater u-repeater-1">
+          <div class="u-container-style u-effect-hover-liftUp u-list-item u-repeater-item u-shading u-list-item-1"
+            data-image-width="1280" data-image-height="720" data-href="{% url 'analyse' %}" data-page-id="91390010">
+            <div class="u-background-effect u-expanded">
+              <div class="u-background-effect-image u-expanded u-image u-shading u-image-1" data-image-width="1280"
+                data-image-height="720"></div>
+            </div>
+            <div class="u-container-layout u-similar-container u-container-layout-1">
+              <h3 class="u-text u-text-2">Analyse&nbsp;de&nbsp;séquence ADN</h3>
+            </div>
+          </div>
+          <div class="u-container-style u-effect-hover-liftUp u-list-item u-repeater-item u-shading u-list-item-2"
+            data-image-width="1500" data-image-height="1000" data-href="{% url 'compare' %}">
+            <div class="u-background-effect u-expanded">
+              <div class="u-background-effect-image u-expanded u-image u-shading u-image-2" data-image-width="1500"
+                data-image-height="1000"></div>
+            </div>
+            <div class="u-container-layout u-similar-container u-container-layout-2">
+              <h3 class="u-text u-text-3">Comparaison&nbsp;de&nbsp;<br>séquences&nbsp;ADN
+              </h3>
+            </div>
+          </div>
+          <div class="u-container-style u-effect-hover-liftUp u-list-item u-repeater-item u-shading u-list-item-3"
+            data-image-width="1200" data-image-height="814" data-href="{% url 'vis3d' %}">
+            <div class="u-background-effect u-expanded">
+              <div class="u-background-effect-image u-expanded u-image u-shading u-image-3" data-image-width="1200"
+                data-image-height="814"></div>
+            </div>
+            <div class="u-container-layout u-similar-container u-container-layout-3">
+              <h3 class="u-text u-text-4">Visualisation&nbsp;3D</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="u-align-center u-clearfix u-section-2" id="sec-c2d8">
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-1">
+        <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
+          <li class="u-tab-item u-tab-item-1" role="presentation">
+            <a class="active u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-1"
+              id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7" aria-selected="true">Fichiers</a>
+          </li>
+          <li class="u-tab-item u-tab-item-2" role="presentation">
+            <a class="u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-2"
+              id="tab-6e5a" href="#link-tab-6e5a" role="tab" aria-controls="link-tab-6e5a"
+              aria-selected="false">Paramètres</a>
+          </li>
+        </ul>
+        <div class="u-tab-content">
+          <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-active u-tab-pane u-tab-pane-1"
+            id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
+            <div class="u-container-layout u-container-layout-1">
+              <h2 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">Liste de vos
+                fichiers</h2>
+                <input type="submit" name="del" form="file_form" class="btn btn-primary" value="Supprimer" />
+              <div class="u-table u-table-responsive u-table-1">
+                <form method="post" id="file_form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <table class="u-table-entity">
+                    <colgroup>
+                      <col width="5.1%">
+                      <col width="61.6%">
+                      <col width="33.3%">
+                    </colgroup>
+                    <thead class="u-palette-1-light-1 u-table-header u-table-header-1">
+                      <tr style="height: 45px;">
+                        <th class="u-border-1 u-border-palette-1-light-1 u-table-cell"></th>
+                        <th class="u-border-1 u-border-palette-4-base u-table-cell">Nom du fichier</th>
+                        <th class="u-border-1 u-border-palette-4-base u-table-cell">Type du fichier</th>
+                      </tr>
+                    </thead>
+                    <tbody class="u-table-body">
+                      {% for f in files %}
+                      <tr style="height: 54px;">
+                        <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4">
+                          <input class="form-check-input" align="center" type="checkbox" name="{{ f.id }} " /></td>
+                        <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name |slice:"6:"}}</td>
+                        <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.type_fichier }}</td>
+                        <td class="u-border-1 u-border-grey-30 u-table-cell"><a href="{{ f.file.url }}" download>Télécharger</a></td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </form>
+              </div>
+              
+              <div class="u-container-style u-group u-group-1">
+                
+              
+                <hr>
+                <form method="post" id="add_file_form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ fileform.file }}
+                  <br>
+                  <br>
+                  {{ fileform.type_fichier }}
+                  <br>
+                  <br>
+                  <input id="envoyer" name="add" form="add_file_form" type="submit" value="Ajouter"
+                  class="btn btn-primary" />
+                </form>
+              
+              </div>
+              <br>
+              <br>
+            </div>
+          </div>
+          <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-pane u-tab-pane-2" id="link-tab-6e5a"
+            role="tabpanel" aria-labelledby="tab-6e5a">
+            <div class="u-container-layout u-container-layout-3">
+              <div class="u-form u-form-1">
+                <b>
+                  <h3>Changer votre mot de passe</h3>
+                </b>
+                <b> {{ passform.errors.as_text }} </b>
+                {% if messages %}
+
+                {% for message in messages%}
+
+                <b class="u-form-send-success"> {{ message.as_text }}</b>
+                {% endfor %}
+
+                {% endif %}
+                <form action="#" name="pass_change" method="POST"
+                  class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px"
+                  source="custom" name="form">
+                  {% csrf_token %}
+                  <div class="u-form-group u-form-name">
+                    <label for="name-efdd" class="u-form-control-hidden u-label"></label>
+                    {{ passform.old_password }}
+                  </div>
+                  <div class="u-form-email u-form-group">
+                    <label for="email-efdd" class="u-form-control-hidden u-label"></label>
+                    {{ passform.new_password1}}
+                  </div>
+
+                  <div class="u-form-group u-form-group-3">
+                    <label for="text-9bdd" class="u-form-control-hidden u-label"></label>
+                    {{ passform.new_password2}}
+                  </div>
+                  <div class="u-align-center u-form-group u-form-submit">
+                    <input type="submit" value="Modifier le mot de passe" name="pass_change"
+                      class="u-btn u-btn-submit u-button-style u-btn-4">
+                    <input type="hidden" value="Modifier le mot de passe" name="pass_change"
+                      class="u-btn u-btn-submit u-button-style u-btn-4">
+                  </div>
+
+                </form>
+
+              </div>
+              <div class="u-form u-form-1">
+                <b>
+                  <h3>Changer votre adresse mail</h3>
+                </b>
+                <b class="u-form-send-error"> {{mailform.non_field_errors.as_text}} </b>
+                {% if messages %}
+
+                {% for message in messages%}
+
+                <b class="u-form-send-success"> {{message.as_text}}</b>
+                {%endfor%}
+
+                {%endif%}
+                <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
+                  style="padding: 10px" source="custom" name="form">
+                  {% csrf_token %}
+                  <div class="u-form-group u-form-name">
+                    <label for="name-efdd" class="u-form-control-hidden u-label"></label>
+                    {{ mailform.old_mail }}
+                  </div>
+                  <div class="u-form-email u-form-group">
+                    <label for="email-efdd" class="u-form-control-hidden u-label"></label>
+                    {{ mailform.new_email}}
+                  </div>
+
+                  <div class="u-form-group u-form-group-3">
+                    <label for="text-9bdd" class="u-form-control-hidden u-label"></label>
+                    {{ mailform.current_password}}
+                  </div>
+                  <div class="u-align-center u-form-group u-form-submit">
+                    <a href="#" class="u-btn u-btn-submit u-button-style u-btn-4">Modifier l'email'</a>
+                    <input type="submit" value="submit" name="mail_change" class="u-form-control-hidden">
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+  <section class="u-align-center u-clearfix u-section-3" id="sec-161c">
+    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1"></div>
+  </section>
+  <section class="u-clearfix u-section-4" id="sec-8282">
+    <div class="u-clearfix u-sheet u-sheet-1"></div>
+  </section>
+
+
+  <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-634f">
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <p class="u-small-text u-text u-text-variant u-text-1">Made by <bf>Cheikh Mohammed Nabil</bf> and <bf>L'hichou Anas</bf></p>
+    </div>
+  </footer>
+
+</body>
+
+</html>
