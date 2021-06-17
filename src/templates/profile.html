@@ -9,6 +9,8 @@
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
   <title>analyse</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'nicepage.css' %}" media="screen">
   <link rel="stylesheet" href="{% static 'profile.css' %}" media="screen">
   <script class="u-script" type="text/javascript" src="{% static 'jquery.js' %}" defer=""></script>
@@ -156,6 +158,7 @@
             <div class="u-container-layout u-container-layout-1">
               <h2 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">Liste de vos
                 fichiers</h2>
+                <input type="submit" name="del" form="file_form" class="btn btn-primary" value="Supprimer" />
               <div class="u-table u-table-responsive u-table-1">
                 <form method="post" id="file_form" enctype="multipart/form-data">
                   {% csrf_token %}
@@ -176,7 +179,7 @@
                       {% for f in files %}
                       <tr style="height: 54px;">
                         <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-4">
-                          <input type="checkbox" name="{{ f.id }} " /></td>
+                          <input class="form-check-input" align="center" type="checkbox" name="{{ f.id }} " /></td>
                         <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name |slice:"6:"}}</td>
                         <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.type_fichier }}</td>
                       </tr>
@@ -185,21 +188,26 @@
                   </table>
                 </form>
               </div>
+              
               <div class="u-container-style u-group u-group-1">
-                <input type="submit" name="del" form="file_form"
-                  class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-3"
-                  value="supprimer" />
+                
               
                 <hr>
                 <form method="post" id="add_file_form" enctype="multipart/form-data">
                   {% csrf_token %}
                   {{ fileform.file }}
+                  <br>
+                  <br>
                   {{ fileform.type_fichier }}
+                  <br>
+                  <br>
                   <input id="envoyer" name="add" form="add_file_form" type="submit" value="Ajouter"
-                  class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" />
+                  class="btn btn-primary" />
                 </form>
               
               </div>
+              <br>
+              <br>
             </div>
           </div>
           <div class="u-align-left u-container-style u-palette-1-light-3 u-tab-pane u-tab-pane-2" id="link-tab-6e5a"

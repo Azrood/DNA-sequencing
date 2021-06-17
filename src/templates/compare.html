@@ -9,18 +9,21 @@
           <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-1">
             <form method="POST">
               {% csrf_token %}
-              <select name="files_1" id="fic">
+              <select class="form-select" name="files_1" id="fic">
                 {% for f in fichiers %}
                 <option value="{{ f.id }}">{{ f.file.name |slice:"6:"}}</option>
                 {% endfor %}
               </select>
-              <select name="files_2" id="fic">
+              <br>
+              <select class="form-select" name="files_2" id="fic">
                 {% for f in fichiers %}
                 <option value="{{ f.id }}">{{ f.file.name |slice:"6:"}}</option>
                 {% endfor %}
               </select>
-              <input type="submit" value="Comparer" />
+              <br>
+              <input type="submit" value="Comparer" class="btn btn-primary" />
             </form>
+            <br>
             <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
               <li class="u-tab-item u-tab-item-1" role="presentation">
                 <a class="active u-active-palette-1-light-3 u-button-style u-hover-palette-1-light-1 u-tab-link u-text-active-black u-text-black u-tab-link-1"

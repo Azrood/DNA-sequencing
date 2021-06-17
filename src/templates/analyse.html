@@ -12,12 +12,13 @@
     <label for="files">Choisissez un de vos fichiers:</label>
 <form method="POST">
   {% csrf_token %}
-    <select name="files" id="fic">
+    <select class = "form-select" name="files" id="fic">
       {% for f in fichiers %}
       <option value="{{ f.id }}">{{ f.file.name |slice:"6:"}}</option>
       {% endfor %}
     </select>
-    <input type="submit" value="Analyser" />
+    <br>
+    <input type="submit" value="Analyser" class="btn btn-primary" />
   </form>
     <div class="u-expanded-width u-tab-links-align-left u-tabs u-tabs-1">
       <ul class="u-spacing-10 u-tab-list u-unstyled" role="tablist">
@@ -75,7 +76,7 @@
         <div class="u-container-style u-palette-1-light-3 u-tab-pane" id="tab-092d" role="tabpanel"
           aria-labelledby="link-tab-092d">
           <div class="u-container-layout u-container-layout-2">
-            <div align="center">
+            <div align="center" style="width: 100%;">
               {{ nuc_graph|safe }}
             </div>
           </div>

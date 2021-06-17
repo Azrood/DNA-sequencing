@@ -84,7 +84,7 @@
     <br>
     Définissez l'identifiant de la structure (par exemple 6VXX) et cliquez sur télécharger :
     <input id="pdbid" value="6VXX" size=4>
-    <button
+    <button class="btn btn-primary"
         onclick="glviewer.clear(); m = $3Dmol.download('pdb:' + $('#pdbid').val(), glviewer, {doAssembly:true, noSecondaryStructure: false});">Télécharger</button>
     <br>
     ou télécharger un fichier local <input type="file"
@@ -93,20 +93,24 @@
     <hr>
     <br>
     <p style="font-size:22px;">Personnalisez la visualisation :</p>
-    Pour les petites molécules
-    <input type="button" value="Bâtons" onclick="glviewer.setStyle({},{stick:{}}); glviewer.render();"></input>
-    <input type="button" value="Sphère" onclick="glviewer.setStyle({},{sphere:{}}); glviewer.render();"></input>
+    Pour les petites molécules :
+    <input class="btn btn-primary" type="button" value="Bâtons" onclick="glviewer.setStyle({},{stick:{}}); glviewer.render();"></input>
+    <input class="btn btn-primary" type="button" value="Sphère" onclick="glviewer.setStyle({},{sphere:{}}); glviewer.render();"></input>
     <br>
     <br>
-    Pour les protéines
-    <input type="button" value="Cartoon"
+    Pour les protéines :
+    <input class="btn btn-primary" type="button" value="Cartoon"
         onclick="glviewer.setStyle({hetflag:false},{cartoon:{}}); glviewer.render();"></input>
-    <input type="button" value="Couleur SS" onclick="colorSS(glviewer);"></input></div>
+    <input class="btn btn-primary" type="button" value="Couleur SS" onclick="colorSS(glviewer);"></input></div>
     </section>
     <section class="u-align-center u-clearfix u-section-2" id="sec-a382">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
       	
       </div>
     </section>
+    <br>
+    <br>
+    <br>
+    <br>
     
-{% endblock %}}
+{% endblock %}
