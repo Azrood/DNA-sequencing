@@ -68,9 +68,9 @@
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" 
-                {% if user.is_authenticated %} href="{% url 'disconnect' %}" style="padding: 10px 20px;">Se Déconnecter</a>
+                {% if user.is_authenticated %} href="{% url 'disconnect' %}" style="padding: 10px 20px;">Déconnexion</a>
               {% else %}
-              href="{% url 'login' %}" style="padding: 10px 20px;">Se Connecter</a>
+              href="{% url 'login' %}" style="padding: 10px 20px;">Connexion</a>
               {% endif %}
             </li>
           </ul>
@@ -87,7 +87,7 @@
                     style="padding: 10px 20px;">Profil</a>
                 </li>
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'disconnect' %}"
-                    style="padding: 10px 20px;">Se Déconnecter</a>
+                    style="padding: 10px 20px;">Déconnexion</a>
                 </li>
               </ul>
             </div>
@@ -182,6 +182,7 @@
                           <input class="form-check-input" align="center" type="checkbox" name="{{ f.id }} " /></td>
                         <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.file.name |slice:"6:"}}</td>
                         <td class="u-border-1 u-border-grey-30 u-table-cell">{{ f.type_fichier }}</td>
+                        <td class="u-border-1 u-border-grey-30 u-table-cell"><a href="{{ f.file.url }}" download>Télécharger</a></td>
                       </tr>
                       {% endfor %}
                     </tbody>
