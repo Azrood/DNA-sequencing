@@ -2,16 +2,14 @@
 DNA sequencing web application
 
 ## How to run the web app
-Access the `src` folder
-```
-cd src
-```
-
 Install the requirements
 ```
 python install -r requirements.txt
 ```
-
+Access the `src` folder
+```
+cd src
+```
 Run the app
 ```
 python manage.py runserver
