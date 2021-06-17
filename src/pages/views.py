@@ -42,7 +42,7 @@ def compare(request):
                                                 "cmprsn": comprsn,
                                                "rec1": record_first,
                                                "rec2": record_second,
-                                               'dotplot':dotplotx(record_first.seq[0:10],record_second.seq[0:10])})
+                                               'dotplot':dotplotx(record_first.seq[0:50],record_second.seq[0:50])})
     return render(request, "compare.html",{"fichiers": fichiers})
 
 @login_required(login_url="login")
